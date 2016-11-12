@@ -1,9 +1,20 @@
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 
 import Schema from '../src/data/schema.js';
 
+// Mongo
+mongoose.connect(process.env.MONGODB_URI_CHECKYOURREP);
+
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('Connected');
+});
+
+// Express
 var app = express()
 
 app.set('port', (process.env.PORT || 5000))

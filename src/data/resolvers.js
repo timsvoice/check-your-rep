@@ -1,4 +1,4 @@
-import { getBill, getRecentBills, getMemberBills } from './connectors.js';
+import { getBill, getRecentBills, getMemberBills, User } from './connectors.js';
 
 const resolvers = {
   RootQuery: {
@@ -16,6 +16,16 @@ const resolvers = {
       return getMemberBills(memberId, type)
         .then((bills) => { return bills; })
         .catch((err) => { throw err; });
+    },
+  },
+  Mutation: {
+    createUser(_, { userData }) {
+      const user = new User({ userData });
+      return user.save((err, res) => {
+        if (err) console.log(err);
+        console.log(res);
+        return res;
+      });
     },
   },
 };

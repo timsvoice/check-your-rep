@@ -1,7 +1,14 @@
 import rp from 'request-promise';
+import mongoose from 'mongoose';
+import User from './connectors.js';
 
 const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
 const propublicaURL = 'https://api.propublica.org/congress/v1/';
+
+// MongoDB
+
+
+// Propublica
 
 /**
  * Get a list of Bills
