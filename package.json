@@ -1,11 +1,11 @@
 {
-  "name": "nko2016-sample",
+  "name": "check-your-rep",
   "version": "0.0.1",
-  "description": "A barebones Node.js app using Express 4",
+  "description": "An app for keeping an eye on your government",
   "main": "index.js",
   "scripts": {
-    "start-server": "webpack",
-    "start-client": "babel-node ./src/index.js"
+    "client": "webpack",
+    "start": "babel-node ./src/index.js"
   },
   "dependencies": {
     "babel-cli": "^6.9.0",
@@ -21,10 +21,12 @@
     "babel-runtime": "^6.9.0",
     "body-parser": "^1.15.2",
     "express": "^4.13.3",
-    "graphql": "^0.8.1",
+    "graphql": "^0.7.0",
     "graphql-server-express": "^0.4.3",
     "graphql-tools": "^0.8.1",
-    "json-loader": "^0.5.4"
+    "json-loader": "^0.5.4",
+    "request": "^2.78.0",
+    "request-promise": "^4.1.1"
   },
   "babel": {
     "presets": [
