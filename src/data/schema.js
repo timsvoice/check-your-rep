@@ -3,19 +3,19 @@ import resolvers from './resolvers.js';
 
 const schema = `
   type Bill {
-    bill_id: String,
-    bill_type: String,
-    number: Int,
-    congress: Int,
-    chamber: String,
-    introduced_on: String,
-    last_action_at: String,
-    last_vote_at: String,
-    last_version_on: String
+    number: String,
+    bill_uri: String,
+    title: String,
+    sponsor_uri: String,
+    introduced_date: String,
+    cosponsors: Int,
+    committees: String,
+    latest_major_action_date: String,
+    latest_major_action: String
   }
   # the schema allows the following query:
   type RootQuery {
-    bills: [Bill]
+    bills(congress: Int, chamber: String, type: String): [Bill]
   }
 
   # we need to tell the server which types represent the root query
