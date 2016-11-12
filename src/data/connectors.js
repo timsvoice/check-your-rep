@@ -25,9 +25,9 @@ module.exports.getRecentBills = (congress, chamber, type) => {
         const bills = res.results[0].bills;
         // const billsWithSubjects = [];
         bills.forEach((bill) => {
-          // const billId = bill.number.split('.').join('').toLowerCase();
-          billSubjects(billId)
-          .then((subjects) => { bill.subjects = subjects })
+          const billId = bill.number.split('.').join('').toLowerCase();
+          bill.subjects = billSubjects(billId)
+            .then((subjects) => { return subjects; })
             .catch((err) => { throw err });
         })
         resolve(bills)
@@ -57,11 +57,38 @@ module.exports.getMemberBills = (memberId, type) => {
         const bills = res.results[0].bills;
         bills.forEach((bill) => {
           const billId = bill.number.split('.').join('').toLowerCase();
-          billSubjects(billId)
-            .then((subjects) => { bill.subjects = subjects })
+          bill.subjects = billSubjects(billId)
+            .then((subjects) => { return subjects })
             .catch((err) => { throw err });
         })
         resolve(bills)
+      })
+      .catch((err) => reject(err))
+  });
+};
+
+/**
+ * Get a single Bill
+ * @param {string} billId The id of the bill to search
+ **/
+
+module.exports.getBill = (billId) => {
+  const options = {
+      method: 'GET',
+      uri: `${propublicaURL}114/bills/${billId}.json`,
+      headers: {
+          'X-Api-Key': PROPUBLICA_API_KEY
+      }
+  };
+  return new Promise((resolve, reject) => {
+    rp(options)
+      .then((res) => JSON.parse(res))
+      .then((res) => {
+        const bill = res.results[0];
+        bill.subjects = billSubjects(billId)
+          .then((subjects) => (subjects))
+          .catch((err) => { throw err });
+        resolve(bill)
       })
       .catch((err) => reject(err))
   });
@@ -85,6 +112,7 @@ const billSubjects = (billId) => {
       .then((res) => JSON.parse(res))
       .then((res) => {
         const subjects = res.results[0].subjects;
+        // console.log(res.results[0].subjects);
         resolve(subjects)
       })
       .catch((err) => reject(err))

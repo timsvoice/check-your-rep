@@ -1,7 +1,12 @@
-import { getRecentBills, getMemberBills } from './connectors.js';
+import { getBill, getRecentBills, getMemberBills } from './connectors.js';
 
 const resolvers = {
   RootQuery: {
+    bill(_, { billId }) {
+      return getBill(billId)
+        .then((bill) => (bill))
+        .catch((err) => { throw err; });
+    },
     bills(_, { congress, chamber, type }) {
       return getRecentBills(congress, chamber, type)
         .then((bills) => { return bills; })

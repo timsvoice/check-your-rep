@@ -7,6 +7,11 @@ const schema = `
     url_name: String
   }
 
+  type Action {
+    datetime: String,
+    description: String
+  }
+
   type Bill {
     number: String,
     bill_uri: String,
@@ -17,6 +22,7 @@ const schema = `
     committees: String,
     latest_major_action_date: String,
     latest_major_action: String,
+    actions: [Action]
     subjects: [Subject]
   }
 
@@ -40,6 +46,7 @@ const schema = `
 
   # the schema allows the following query:
   type RootQuery {
+    bill(billId: String): Bill,
     bills(congress: Int, chamber: String, type: String): [ Bill ],
     memberBills(memberId: String, type: String): [ Bill ]
   }
