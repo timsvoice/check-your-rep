@@ -2,6 +2,11 @@ import { makeExecutableSchema } from 'graphql-tools';
 import resolvers from './resolvers.js';
 
 const schema = `
+  type Subject {
+    name: String,
+    url_name: String
+  }
+
   type Bill {
     number: String,
     bill_uri: String,
@@ -11,11 +16,32 @@ const schema = `
     cosponsors: Int,
     committees: String,
     latest_major_action_date: String,
-    latest_major_action: String
+    latest_major_action: String,
+    subjects: [Subject]
   }
+
+  type MemberBill {
+    congress: String,
+    number: String
+    bill: String,
+    url_number: String,
+    title: String,
+    sponsor: String,
+    sponsor_id: String,
+    introduced_date: String,
+    number_of_cosponsors: String,
+    committees: String,
+    latest_major_action_date: String,
+    latest_major_action: String,
+    house_passage_vote: String,
+    senate_passage_vote: String,
+    subjects: [Subject]
+  }
+
   # the schema allows the following query:
   type RootQuery {
-    bills(congress: Int, chamber: String, type: String): [Bill]
+    bills(congress: Int, chamber: String, type: String): [ Bill ],
+    memberBills(memberId: String, type: String): [ Bill ]
   }
 
   # we need to tell the server which types represent the root query
