@@ -1,3 +1,5 @@
+const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
+console.log(PROPUBLICA_API_KEY);
 /**
  * Get a list of Bills
  **/
