@@ -3,7 +3,7 @@ import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 
-import Schema from '../src/data/schema.js';
+import { graphqlSchema } from '../src/data/schema.js';
 
 // Mongo
 mongoose.connect(process.env.MONGODB_URI_CHECKYOURREP);
@@ -21,7 +21,7 @@ app.set('port', (process.env.PORT || 5000))
 app.use(express.static(__dirname + '/public'))
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({
-  schema: Schema
+  schema: graphqlSchema
 }));
 
 app.use('/graphiql', graphiqlExpress({
