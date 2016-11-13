@@ -1,26 +1,20 @@
 import rp from 'request-promise';
-import mongoose from 'mongoose';
 import User from './connectors.js';
+import * as firebase from "firebase";
 
 const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
 const propublicaURL = 'https://api.propublica.org/congress/v1/';
 
-// MongoDB
-
-module.exports.user = {
-  create(userData) {
-    const newUser = new User(userData);
-    newUser.save()
-      .then((res) => { console.log(res); return res._id; })
-      .catch((err) => { throw err; })
-  },
+module.exports.user = {  
   update(id, mutation) {
-    User.update({ _id: id }, { $set: mutation } )
-      .then((res) => { console.log(res) })
+    firebase.database().ref(`users/${id}`).set( mutation )
+      .then((user) => { console.log(user) })
+      .catch((err) => { console.log(err) });
   },
-  delet(id) {
-    User.remove({ _id: id })
+  delete(id) {
+    firebase.database().ref(`users/${id}`).remove()
       .then((res) => { console.log(res) })
+      .catch((err) => { console.log(err) });
   },
 };
 

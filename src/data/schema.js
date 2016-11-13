@@ -76,24 +76,3 @@ module.exports.graphqlSchema = makeExecutableSchema({
   typeDefs: schema,
   resolvers
 })
-
-// Mongo
-const userSchema = mongoose.Schema({
-  zip_code: Number,
-  email_address: String,
-  first_name: String,
-  last_name: String,
-  representatives: [{
-    id: String,
-    api_uir: String,
-    first_name: String,
-    last_name: String,
-    party: String,
-  }],
-  topics: [{
-    name: String,
-    url_name: String,
-  }]
-})
-
-module.exports.User = mongoose.model('users', userSchema);

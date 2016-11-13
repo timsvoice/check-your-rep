@@ -5,14 +5,16 @@ import mongoose from 'mongoose';
 
 import { graphqlSchema } from '../src/data/schema.js';
 
-// Mongo
-mongoose.connect(process.env.MONGODB_URI_CHECKYOURREP);
+// Firebase
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API;
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.FIREBASE_URL,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_ID
+};
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected');
-});
+firebase.initializeApp(firebaseConfig);
 
 // Express
 var app = express()
