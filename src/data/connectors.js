@@ -5,6 +5,9 @@ import User from './connectors.js';
 const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
 const propublicaURL = 'https://api.propublica.org/congress/v1/';
 
+const GOOGLE_CIVIC_KEY = process.env.GOOGLE_CIVIC_KEY;
+const googleURL = 'https://www.googleapis.com/civicinfo/v2/representatives'
+
 // MongoDB
 
 module.exports.user = {
@@ -142,3 +145,5 @@ module.exports.bill = {
     });
   },
 };
+
+// Google Civic
