@@ -5,7 +5,7 @@ import * as firebase from "firebase";
 const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
 const propublicaURL = 'https://api.propublica.org/congress/v1/';
 
-module.exports.user = {  
+module.exports.user = {
   update(id, mutation) {
     firebase.database().ref(`users/${id}`).set( mutation )
       .then((user) => { console.log(user) })
