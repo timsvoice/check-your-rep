@@ -2,12 +2,15 @@ import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
+import * as firebase from 'firebase';
+
+import { reps } from './data/connectors.js';
 
 import { graphqlSchema } from '../src/data/schema.js';
 
 // Firebase
 const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API;
+  apiKey: process.env.FIREBASE_API,
   authDomain: process.env.FIREBASE_AUTH_DOMAIN,
   databaseURL: process.env.FIREBASE_URL,
   storageBucket: process.env.FIREBASE_STORAGE_BUCKET,

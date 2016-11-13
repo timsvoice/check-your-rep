@@ -5,6 +5,26 @@ import * as firebase from "firebase";
 const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
 const propublicaURL = 'https://api.propublica.org/congress/v1/';
 
+const GOOGLE_CIVIC_KEY = process.env.GOOGLE_CIVIC_KEY;
+const googleUrl = `https://www.googleapis.com/civicinfo/v2/representatives`;
+
+// Google Civic
+
+module.exports.reps = {
+  get(zip_code) {
+    return new Promise((resolve, reject) => {
+      rp(`${googleUrl}?address=${zip_code}&key=${GOOGLE_CIVIC_KEY}`)
+        .then((res) => JSON.parse(res))
+        .then((res) => {
+          // Parse reps
+        })
+        .catch((err) => { throw err})
+    })
+  }
+}
+
+// Firebase
+
 module.exports.user = {
   update(id, mutation) {
     firebase.database().ref(`users/${id}`).set( mutation )
