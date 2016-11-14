@@ -1,6 +1,10 @@
+'use-strict';
+
+import Mailgun from 'mailgun-js';
+
 const MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
 const domain = process.env.MAILGUN_CHECKYOURREP_DOMAIN;
-const mailgun = require('mailgun-js')({apiKey: MAILGUN_API_KEY, domain });
+const mailgun = Mailgun({apiKey: MAILGUN_API_KEY, domain });
 
 module.exports.mailer = {
   send(message, user) {
