@@ -3,8 +3,8 @@ import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
 import casual from 'casual';
 
-import { parser } from '../data/parser.js';
-import { bills } from '../data/connectors.js';
+import { parser } from '../api/parser.js';
+import { bills } from '../api/connectors.js';
 
 chai.use(chaiAsPromised);
 const assert = chai.assert;
