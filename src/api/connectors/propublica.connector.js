@@ -47,6 +47,7 @@ module.exports.congress = {
         .then((res) => JSON.parse(res))
         .then((res) => {
           const bill = res.results[0];
+          console.log(bill);
           bill.subjects = billSubjects(id)
             .then((subjects) => (subjects))
             .catch((err) => { throw err });
@@ -168,26 +169,4 @@ module.exports.congress = {
         .catch((err) => reject(err))
     });
   },
-
-  /**
-   * Get a list of Bills by Member by Name
-   * @param {string} chamber House or Senate
-   * @param {string} first_name Member's First Name
-   * @param {string} last_name Member's Last Name
-   **/
-
-  getMemberBillsByName(chamber, first_name, last_name, type) {
-    return new Promise((resolve, reject) => {
-      this.getMember(chamber, first_name, last_name)
-        .then((member) => {
-          return this.getMemberBills(member.id, type);
-        })
-        .then((bills) => {
-          resolve(bills);
-        })
-        .catch((err) => {
-          reject(err);
-        })
-    })
-  }
 };

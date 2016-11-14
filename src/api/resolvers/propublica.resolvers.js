@@ -18,7 +18,7 @@ const resolvers = {
         .catch((err) => { throw err; })
     },
     members(_, { chamber }) {
-      return congress.getMember(chamber)
+      return congress.getMembers(chamber)
         .then((members) => { return members; })
         .catch((err) => { throw err; })
     },
@@ -28,9 +28,10 @@ const resolvers = {
         .catch((err) => { throw err; });
     },
     memberBillsByName(_, { chamber, first_name, last_name, type }) {
-      return congress.getMemberBillsByName(chamber, first_name, last_name, type)
+      return congress.getMember(chamber, first_name, last_name)
+        .then((member) => { return congress.getMemberBills(member.id, type); })
         .then((bills) => { return bills; })
-        .catch((err) => { throw err; });
+        .catch((err) => { throw err;})
     },
   },
 };

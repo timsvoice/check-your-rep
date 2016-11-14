@@ -1,13 +1,13 @@
 // GraphQL
-module.exports.schema = `
+const propublicaSchema = `
   type Subject {
     name: String,
-    url_name: String
+    url_name: String,
   }
 
   type Action {
     datetime: String,
-    description: String
+    description: String,
   }
 
   type Bill {
@@ -20,8 +20,34 @@ module.exports.schema = `
     committees: String,
     latest_major_action_date: String,
     latest_major_action: String,
-    actions: [Action]
-    subjects: [Subject]
+    actions: [Action],
+    subjects: [Subject],
+  }
+
+  type Member {
+    id: String,
+    thomas_id: String,
+    api_uri: String,
+    first_name: String,
+    middle_name: String,
+    last_name: String,
+    party: String,
+    twitter_account: String,
+    facebook_account: String,
+    facebook_id: String,
+    url: String,
+    rss_url: String,
+    domain: String,
+    dw_nominate: String,
+    ideal_point: String,
+    seniority: String,
+    next_election: String,
+    total_votes: String,
+    missed_votes: String,
+    total_present: String,
+    state: String,
+    missed_votes_pct: String,
+    votes_with_party_pct: String,
   }
 
   type MemberBill {
@@ -39,14 +65,17 @@ module.exports.schema = `
     latest_major_action: String,
     house_passage_vote: String,
     senate_passage_vote: String,
-    subjects: [Subject]
+    subjects: [Subject],
   }
 
   # the schema allows the following query:
   type RootQuery {
     bill(billId: String): Bill,
     bills(chamber: String, type: String): [ Bill ],
-    memberBills(memberId: String, type: String): [ Bill ]
+    member(chamber: String, first_name: String, last_name: String): Member,
+    members(chamber: String): [ Member ],
+    memberBills(memberId: String, type: String): [ Bill ],
+    memberBillsByName(chamber: String, first_name: String, last_name: String, type: String): [ Bill ],
   }
 
   # we need to tell the server which types represent the root query
@@ -55,3 +84,4 @@ module.exports.schema = `
     query: RootQuery
   }
 `
+export default propublicaSchema;
