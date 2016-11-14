@@ -14,12 +14,10 @@ const propublicaSchema = `
     number: String,
     bill_uri: String,
     title: String,
-    sponsor_uri: String,
+    summary: String,
+    sponsor: String,
     introduced_date: String,
     cosponsors: Int,
-    committees: String,
-    latest_major_action_date: String,
-    latest_major_action: String,
     actions: [Action],
     subjects: [Subject],
   }
@@ -72,6 +70,7 @@ const propublicaSchema = `
   type RootQuery {
     bill(billId: String): Bill,
     bills(chamber: String, type: String): [ Bill ],
+    billsByKeyword(keyword: String): [ Bill ],
     member(chamber: String, first_name: String, last_name: String): Member,
     members(chamber: String): [ Member ],
     memberBills(memberId: String, type: String): [ Bill ],

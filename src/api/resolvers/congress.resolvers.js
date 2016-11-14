@@ -1,4 +1,5 @@
 import { congress } from '../connectors/propublica.connector.js';
+import { congress as sunlightCongress } from '../connectors/sunlight.connector.js';
 
 const resolvers = {
   RootQuery: {
@@ -11,6 +12,11 @@ const resolvers = {
       return congress.getRecent(chamber, type)
         .then((bills) => { return bills; })
         .catch((err) => { throw err; });
+    },
+    billsByKeyword(_, { keyword, date }) {
+      return sunlightCongress.getBillsByKeyword(keyword, date)
+        .then((bills) => { return bills; })
+        .catch((err) => { throw err; })
     },
     member(_, { chamber, first_name, last_name }) {
       return congress.getMember(chamber, first_name, last_name)

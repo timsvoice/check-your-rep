@@ -11,18 +11,16 @@ const assert = chai.assert;
 
 describe('The Sunlight API', function() {
   it('should return a list of bills that relate to an array of keywords', function () {
-    const keywords = ['immigration'];
-    return assert.eventually.deepProperty(
-      congress.getBillsByKeywords(keywords),
-      'results'
+    const keyword = 'Immigration';
+    return assert.eventually.isArray(
+      congress.getBillsByKeyword(keyword),
     );
   }),
   it('should return a list of bills that relate to an array of keywords from today only', function () {
-    const keywords = ['immigration'];
+    const keyword = 'Immigration';
     const date = moment().format("YYYY-MM-DD");
-    return assert.eventually.deepProperty(
-      congress.getBillsByKeywords(keywords, date),
-      'results'
+    return assert.eventually.isArray(
+      congress.getBillsByKeyword(keyword, date),
     );
   })
 })
