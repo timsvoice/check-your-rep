@@ -3,7 +3,7 @@ import chaiAsPromised from 'chai-as-promised';
 import sinon from 'sinon';
 import casual from 'casual';
 
-import { congress } from '../api/connectors.js';
+import { congress } from '../api/propublica.connector.js';
 
 chai.use(chaiAsPromised);
 const assert = chai.assert;

@@ -1,4 +1,5 @@
-import { bill, user } from './connectors.js';
+import { congress } from './propublica.connector.js';
+import { user } from './firebase.connector.js';
 
 const resolvers = {
   RootQuery: {

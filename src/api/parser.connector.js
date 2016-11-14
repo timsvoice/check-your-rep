@@ -1,6 +1,6 @@
 "use strict";
 
-import { congress } from './connectors.js';
+import { congress } from './propublica.connector.js';
 import _ from 'underscore';
 
 
