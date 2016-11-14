@@ -13,8 +13,8 @@ const resolvers = {
         .then((bills) => { return bills; })
         .catch((err) => { throw err; });
     },
-    billsByKeyword(_, { keyword, date }) {
-      return sunlightCongress.getBillsByKeyword(keyword, date)
+    billsByKeywords(_, { keywords, date }) {
+      return sunlightCongress.getBillsByKeywords(keywords, date)
         .then((bills) => { return bills; })
         .catch((err) => { throw err; })
     },

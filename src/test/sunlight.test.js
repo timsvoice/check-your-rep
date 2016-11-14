@@ -11,16 +11,16 @@ const assert = chai.assert;
 
 describe('The Sunlight API', function() {
   it('should return a list of bills that relate to an array of keywords', function () {
-    const keyword = 'Immigration';
+    const keywords = ['Immigration'];
     return assert.eventually.isArray(
-      congress.getBillsByKeyword(keyword),
+      congress.getBillsByKeywords(keywords),
     );
   }),
   it('should return a list of bills that relate to an array of keywords from today only', function () {
-    const keyword = 'Immigration';
+    const keywords = ['Immigration'];
     const date = moment().format("YYYY-MM-DD");
     return assert.eventually.isArray(
-      congress.getBillsByKeyword(keyword, date),
+      congress.getBillsByKeywords(keywords, date),
     );
   })
 })

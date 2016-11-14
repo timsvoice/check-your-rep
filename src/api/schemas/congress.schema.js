@@ -2,7 +2,6 @@
 const propublicaSchema = `
   type Subject {
     name: String,
-    url_name: String,
   }
 
   type Action {
@@ -70,7 +69,7 @@ const propublicaSchema = `
   type RootQuery {
     bill(billId: String): Bill,
     bills(chamber: String, type: String): [ Bill ],
-    billsByKeyword(keyword: String): [ Bill ],
+    billsByKeywords(keywords: [ String ]): [ Bill ],
     member(chamber: String, first_name: String, last_name: String): Member,
     members(chamber: String): [ Member ],
     memberBills(memberId: String, type: String): [ Bill ],
