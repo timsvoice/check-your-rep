@@ -7,7 +7,7 @@ import _ from 'underscore';
 module.exports.parser = {
   /**
   * Function to parse recent bills for relevant subjects
-  * @param {interests} Array an array of user chosen topics
+  * @param {interestsArray} Array an array of user chosen topics
   * @param {bills} Array an array of recent bills to parse
   **/
   interests(interestsArray, bills) {
