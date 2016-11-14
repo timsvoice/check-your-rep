@@ -4,9 +4,7 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import * as firebase from 'firebase';
 
-import { reps } from './data/connectors.js';
-
-import { graphqlSchema } from '../src/data/schema.js';
+import { graphqlSchema } from '../src/api/index.js';
 
 // Firebase
 const firebaseConfig = {

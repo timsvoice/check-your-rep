@@ -1,9 +1,5 @@
-import { makeExecutableSchema } from 'graphql-tools';
-import mongoose from 'mongoose';
-import resolvers from './resolvers.js';
-
 // GraphQL
-const schema = `
+module.exports.schema = `
   type Subject {
     name: String,
     url_name: String
@@ -46,33 +42,16 @@ const schema = `
     subjects: [Subject]
   }
 
-  type User {
-    _id: String,
-    zip_code: Int,
-    email_address: String,
-    first_name: String,
-    last_name: String,
-  }
-
   # the schema allows the following query:
   type RootQuery {
     bill(billId: String): Bill,
-    bills(congress: Int, chamber: String, type: String): [ Bill ],
+    bills(chamber: String, type: String): [ Bill ],
     memberBills(memberId: String, type: String): [ Bill ]
-  }
-
-  type Mutation {
-    createUser(zip_code: Int, email_address: String, first_name: String, last_name: String): User
   }
 
   # we need to tell the server which types represent the root query
   # and root mutation types. We call them RootQuery and RootMutation by convention.
   schema {
-    query: RootQuery,
-    mutation: Mutation
+    query: RootQuery
   }
 `
-module.exports.graphqlSchema = makeExecutableSchema({
-  typeDefs: schema,
-  resolvers
-})
