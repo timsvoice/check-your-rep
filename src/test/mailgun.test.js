@@ -9,10 +9,10 @@ chai.use(chaiAsPromised);
 const assert = chai.assert;
 
 describe('Mailgun Sending', function () {
-  it('should send a test email', function (done) {
-    mailer.send('Test Message', { email: 'timsethvoice@gmail.com '}, (res, err) => {
-      assert.isObject(res, 'Yay!');
-      done();
-    })
-  })
+  // it('should send a test email', function (done) {
+  //   mailer.send('Test Message', { email: 'timsethvoice@gmail.com '}, (res, err) => {
+  //     assert.isObject(res, 'Yay!');
+  //     done();
+  //   })
+  // })
 })

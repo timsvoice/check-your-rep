@@ -24,9 +24,4 @@ describe('Propublica Bills', function () {
   it('should return a specific member', function () {
     return assert.eventually.deepPropertyVal(congress.getMember('senate', 'Lamar', 'Alexander'), 'first_name', 'Lamar');
   })
-  it('should get member bills from a first and last name', function () {
-    return assert.eventually.isArray(
-      congress.getMemberBillsByName('senate', 'Lamar', 'Alexander', 'introduced')
-    );
-  })
 })

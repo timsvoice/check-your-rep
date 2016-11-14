@@ -47,7 +47,6 @@ module.exports.congress = {
         .then((res) => JSON.parse(res))
         .then((res) => {
           const bill = res.results[0];
-          console.log(bill);
           bill.subjects = billSubjects(id)
             .then((subjects) => (subjects))
             .catch((err) => { throw err });
