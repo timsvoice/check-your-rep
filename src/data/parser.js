@@ -1,38 +1,25 @@
 "use strict";
 
-import { getRecentBills, getMemberBills } from './connectors.js';
+import { congress } from './connectors.js';
+import _ from 'underscore';
 
-/**
-* Function to parse recent bills for relevant subjects
-* @param {userInterests} Array an array of user chosen topics
-* @param {recentBills} Array an array of recent bills to parse
-**/
 
-module.exports.parseInterests = (userInterests, recentBills) => {
-  const userBills = [];
-  userInterests.forEach((interest) => {
-    let idx = recentBills.indexOf(interest);
-    while (idx != -1) userBills.push(recentBills[idx]);
-  })
-  return userBills;
-}
-
-/**
-* Function to parse recent bills for representative
-* @param {userInterests} Array an array of user chosen topics
-* @param {userReps} Array an array of user representatives
-**/
-
-module.exports.parseReps = (userInterests, userReps) => {
-  const userBills = [];
-  userReps.forEach((rep) => {
-    const repBills = getMemberBills(rep.id)
-      .then((bills) => (bills))
-      .catch((err) => { throw err; });
-    userInterests.forEach((interest) => {
-      let idx = repBills.indexOf(interest);
-      while (idx != -1) userBills.push(recentBills[idx]);
-    })
-  })
-  return userBills;
-}
+module.exports.parser = {
+  /**
+  * Function to parse recent bills for relevant subjects
+  * @param {interests} Array an array of user chosen topics
+  * @param {bills} Array an array of recent bills to parse
+  **/
+  interests(interests, bills) {
+    console.log(interests, bills);
+    return new Promise((resolve, reject) => {
+      const userBills = [];
+      bills.forEach((bill) => {
+        const interests = _.intersection(bill.subjects, interests);
+        if (interests.length > 0) userBills.push(bill);
+      });
+      console.log(userBills)
+      resolve(userBills);
+    });
+  },
+};

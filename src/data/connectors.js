@@ -33,7 +33,7 @@ module.exports.reps = {
         })
         .catch((err) => { throw err})
     });
-  }
+  },
 }
 
 // Firebase
@@ -71,14 +71,13 @@ const billSubjects = (billId) => {
       .then((res) => JSON.parse(res))
       .then((res) => {
         const subjects = res.results[0].subjects;
-        // console.log(res.results[0].subjects);
         resolve(subjects)
       })
       .catch((err) => reject(err))
   });
 }
 
-module.exports.bill = {
+module.exports.congress = {
   /**
    * Get a single Bill
    * @param {string} billId The id of the bill to search
@@ -112,7 +111,7 @@ module.exports.bill = {
    * @param {string} type The type of bill (introduced, major, updated, passed)
    **/
 
-  getRecent(congress, chamber, type) {
+  getRecent(chamber, type) {
     const options = {
         method: 'GET',
         uri: `${propublicaURL}114/${chamber}/bills/${type}.json`,
@@ -137,6 +136,55 @@ module.exports.bill = {
         .catch((err) => reject(err))
     });
   },
+
+  /**
+   * Get a list of Members
+   * @param {string} chamber The chamber for requested members
+   **/
+
+   getMembers(chamber) {
+     const options = {
+         method: 'GET',
+         uri: `${propublicaURL}114/${chamber}/members.json`,
+         headers: {
+             'X-Api-Key': PROPUBLICA_API_KEY
+         }
+     };
+     return new Promise((resolve, reject) => {
+       rp(options)
+        .then((res) => JSON.parse(res))
+        .then((res) => {
+          resolve(res.results[0].members);
+        })
+        .catch((err) => {
+          throw err;
+        })
+     })
+   },
+
+   /**
+    * Get a specific Member
+    * @param {string} chamber The chamber for requested members
+    **/
+
+    getMember(chamber, first_name, last_name) {
+      return new Promise((resolve, reject) => {
+        this.getMembers(chamber)
+          .then((members) => {
+
+            const member = members.filter((member) => {
+              if (member.last_name === last_name && member.first_name === first_name) {
+                return member;
+              }
+            });
+            resolve(member[0]);
+
+          })
+          .catch((err) => {
+            reject(err);
+          })
+      })
+    },
 
   /**
    * Get a list of Bills by Member
@@ -168,4 +216,18 @@ module.exports.bill = {
         .catch((err) => reject(err))
     });
   },
+  getMemberBillsByName(chamber, first_name, last_name, type) {
+    return new Promise((resolve, reject) => {
+      this.getMember(chamber, first_name, last_name)
+        .then((member) => {
+          return this.getMemberBills(member.id, type);
+        })
+        .then((bills) => {
+          resolve(bills);
+        })
+        .catch((err) => {
+          reject(err);
+        })
+    })
+  }
 };
