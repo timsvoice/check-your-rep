@@ -4,10 +4,11 @@
   "description": "An app for keeping an eye on your government",
   "main": "index.js",
   "scripts": {
+    "test": "mocha ./src/test/ --require babel-register",
     "client": "webpack",
     "start": "node ./dist/app.js",
     "start-dev": "babel-node ./src/index.js",
-    "test": "mocha ./src/test/ --compilers js:babel-core/register"
+    "test-dev": "mocha -w ./src/test/ --require babel-register"
   },
   "dependencies": {
     "babel-cli": "^6.9.0",

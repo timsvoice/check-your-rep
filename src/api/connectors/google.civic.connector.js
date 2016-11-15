@@ -1,8 +1,7 @@
 import rp from 'request-promise';
 
-const GOOGLE_CIVIC_KEY = process.env.GOOGLE_CIVIC_KEY;
+const GOOGLE_CIVIC_KEY = process.env.GOOGLE_CIVIC_API_KEY;
 const googleUrl = `https://www.googleapis.com/civicinfo/v2/representatives`;
-
 // Google Civic
 
 module.exports.reps = {

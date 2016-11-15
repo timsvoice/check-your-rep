@@ -4,7 +4,6 @@ const PROPUBLICA_API_KEY = process.env.PROPUBLICA_API_KEY;
 const propublicaURL = 'https://api.propublica.org/congress/v1/';
 
 // Propublica
-
 /**
  * Get a Bill's subjects
  * @param {string} billId Bill slug
