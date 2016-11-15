@@ -1,3 +1,4 @@
+import {} from 'dotenv/config';
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';

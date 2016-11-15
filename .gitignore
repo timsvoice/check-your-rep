@@ -40,3 +40,6 @@ jspm_packages
 
 .serverless/cloudformation-template-update-stack.json
 .serverless/value-stack.zip
+
+.env
+check-your-rep.pem
