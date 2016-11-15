@@ -1,19 +1,17 @@
-import {} from 'dotenv/config';
 import chai from 'chai';
 import chaiAsPromised from 'chai-as-promised';
-import sinon from 'sinon';
-import casual from 'casual';
-
-import { mailer } from '../mailer.js';
+import { mailer } from '../api/lib/mailer.js';
 
 chai.use(chaiAsPromised);
 const assert = chai.assert;
 
-// describe('Mailgun Sending', function () {
-//   it('should send a test email', function (done) {
-//     mailer.send('Test Message', { email: 'timsethvoice@gmail.com '}, (res, err) => {
-//       assert.isObject(res, 'Yay!');
-//       done();
-//     })
-//   })
-// })
+describe('Mailer', function() {
+  it('should send an email to Mailgun', function() {
+    const data = {
+      user: { email: 'timsethvoice@gmail.com' },
+      message: 'This is an email test',
+      testmode: true,
+    };
+    return assert.eventually.deepPropertyVal(mailer(data), 'message', 'Queued. Thank you.');
+  })
+})
