@@ -4,8 +4,13 @@ import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import * as firebase from 'firebase';
+import { scheduler } from './lib/dispatch.js';
 
 import { graphqlSchema } from './api/index.js';
+
+scheduler()
+  .then((res) => { console.log(res) })
+  .catch((err) => { throw err })
 
 // Firebase
 const firebaseConfig = {
