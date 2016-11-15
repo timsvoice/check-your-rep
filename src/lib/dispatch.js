@@ -8,7 +8,7 @@ module.exports.scheduler = () => {
   const rule = new schedule.RecurrenceRule();
   rule.dayOfWeek = [1,2,3,4,5];
   rule.hour = 18;
-  rule.minute = 13;
+  rule.minute = 15;
 
   return new Promise((resolve, reject) => {
     schedule.scheduleJob(rule, () => {
