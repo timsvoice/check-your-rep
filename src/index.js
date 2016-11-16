@@ -1,5 +1,6 @@
 import {} from 'dotenv/config';
 import express from 'express';
+import cors from 'cors';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
 import { dispatch } from './lib/dispatch.js';
@@ -14,12 +15,9 @@ dispatch.scheduler()
 var app = express()
 
 app.set('port', (process.env.PORT || 5000))
-app.use(express.static(__dirname + '/public'))
+app.use(cors());
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-})
+app.use(express.static(__dirname + '/public'))
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({
   schema: graphqlSchema

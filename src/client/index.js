@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 
 const client = new ApolloClient({
   networkInterface: createNetworkInterface({
-    uri: 'http://localhost:8000/graphql'
+    uri: 'http://checkyourrep-api-env.us-west-2.elasticbeanstalk.com/graphql'
   })
 })
 

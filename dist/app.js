@@ -52,15 +52,19 @@
 
 	var _express2 = _interopRequireDefault(_express);
 
-	var _graphqlServerExpress = __webpack_require__(3);
+	var _cors = __webpack_require__(3);
 
-	var _bodyParser = __webpack_require__(4);
+	var _cors2 = _interopRequireDefault(_cors);
+
+	var _graphqlServerExpress = __webpack_require__(4);
+
+	var _bodyParser = __webpack_require__(5);
 
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-	var _dispatch = __webpack_require__(5);
+	var _dispatch = __webpack_require__(6);
 
-	var _index = __webpack_require__(11);
+	var _index = __webpack_require__(12);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -74,12 +78,9 @@
 	var app = (0, _express2.default)();
 
 	app.set('port', process.env.PORT || 5000);
-	app.use(_express2.default.static(__dirname + '/public'));
+	app.use((0, _cors2.default)());
 
-	app.use(function (req, res, next) {
-	  res.header('Access-Control-Allow-Origin', '*');
-	  next();
-	});
+	app.use(_express2.default.static(__dirname + '/public'));
 
 	app.use('/graphql', _bodyParser2.default.json(), (0, _graphqlServerExpress.graphqlExpress)({
 	  schema: _index.graphqlSchema
@@ -114,28 +115,34 @@
 /* 3 */
 /***/ function(module, exports) {
 
-	module.exports = require("graphql-server-express");
+	module.exports = require("cors");
 
 /***/ },
 /* 4 */
 /***/ function(module, exports) {
 
-	module.exports = require("body-parser");
+	module.exports = require("graphql-server-express");
 
 /***/ },
 /* 5 */
+/***/ function(module, exports) {
+
+	module.exports = require("body-parser");
+
+/***/ },
+/* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	"ues-strict";
 
-	var _nodeSchedule = __webpack_require__(6);
+	var _nodeSchedule = __webpack_require__(7);
 
 	var _nodeSchedule2 = _interopRequireDefault(_nodeSchedule);
 
-	var _mailer = __webpack_require__(7);
+	var _mailer = __webpack_require__(8);
 
-	var _firebaseConnector = __webpack_require__(9);
+	var _firebaseConnector = __webpack_require__(10);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -201,18 +208,18 @@
 	};
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports) {
 
 	module.exports = require("node-schedule");
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _mailgunJs = __webpack_require__(8);
+	var _mailgunJs = __webpack_require__(9);
 
 	var _mailgunJs2 = _interopRequireDefault(_mailgunJs);
 
@@ -244,18 +251,18 @@
 	};
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports) {
 
 	module.exports = require("mailgun-js");
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _firebaseAdmin = __webpack_require__(10);
+	var _firebaseAdmin = __webpack_require__(11);
 
 	var _firebaseAdmin2 = _interopRequireDefault(_firebaseAdmin);
 
@@ -294,28 +301,28 @@
 	};
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	module.exports = require("firebase-admin");
 
 /***/ },
-/* 11 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _graphqlTools = __webpack_require__(12);
+	var _graphqlTools = __webpack_require__(13);
 
-	var _underscore = __webpack_require__(13);
+	var _underscore = __webpack_require__(14);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _congressSchema = __webpack_require__(14);
+	var _congressSchema = __webpack_require__(15);
 
 	var _congressSchema2 = _interopRequireDefault(_congressSchema);
 
-	var _congressResolvers = __webpack_require__(15);
+	var _congressResolvers = __webpack_require__(16);
 
 	var _congressResolvers2 = _interopRequireDefault(_congressResolvers);
 
@@ -327,19 +334,19 @@
 	});
 
 /***/ },
-/* 12 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = require("graphql-tools");
 
 /***/ },
-/* 13 */
+/* 14 */
 /***/ function(module, exports) {
 
 	module.exports = require("underscore");
 
 /***/ },
-/* 14 */
+/* 15 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -352,7 +359,7 @@
 	exports.default = propublicaSchema;
 
 /***/ },
-/* 15 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -361,9 +368,9 @@
 	  value: true
 	});
 
-	var _propublicaConnector = __webpack_require__(16);
+	var _propublicaConnector = __webpack_require__(17);
 
-	var _sunlightConnector = __webpack_require__(18);
+	var _sunlightConnector = __webpack_require__(19);
 
 	var resolvers = {
 	  RootQuery: {
@@ -446,12 +453,12 @@
 	exports.default = resolvers;
 
 /***/ },
-/* 16 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _requestPromise = __webpack_require__(17);
+	var _requestPromise = __webpack_require__(18);
 
 	var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
@@ -639,26 +646,26 @@
 	};
 
 /***/ },
-/* 17 */
+/* 18 */
 /***/ function(module, exports) {
 
 	module.exports = require("request-promise");
 
 /***/ },
-/* 18 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _requestPromise = __webpack_require__(17);
+	var _requestPromise = __webpack_require__(18);
 
 	var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
-	var _moment = __webpack_require__(19);
+	var _moment = __webpack_require__(20);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _underscore = __webpack_require__(13);
+	var _underscore = __webpack_require__(14);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -709,7 +716,7 @@
 	};
 
 /***/ },
-/* 19 */
+/* 20 */
 /***/ function(module, exports) {
 
 	module.exports = require("moment");
