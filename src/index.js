@@ -2,11 +2,11 @@ import {} from 'dotenv/config';
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
-import { scheduler } from './lib/dispatch.js';
+import { dispatch } from './lib/dispatch.js';
 
 import { graphqlSchema } from './api/index.js';
 
-scheduler()
+schedule()
   .then((res) => { console.log(res) })
   .catch((err) => { throw err })
 
