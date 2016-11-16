@@ -58,30 +58,17 @@
 
 	var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
-	var _mongoose = __webpack_require__(5);
+	var _dispatch = __webpack_require__(5);
 
-	var _mongoose2 = _interopRequireDefault(_mongoose);
-
-	var _firebase = __webpack_require__(6);
-
-	var firebase = _interopRequireWildcard(_firebase);
-
-	var _index = __webpack_require__(7);
-
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	var _index = __webpack_require__(11);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// Firebase
-	var firebaseConfig = {
-	  apiKey: process.env.FIREBASE_API,
-	  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-	  databaseURL: process.env.FIREBASE_URL,
-	  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-	  messagingSenderId: process.env.FIREBASE_MESSAGING_ID
-	};
-
-	firebase.initializeApp(firebaseConfig);
+	(0, _dispatch.scheduler)().then(function (res) {
+	  console.log(res);
+	}).catch(function (err) {
+	  throw err;
+	});
 
 	// Express
 	var app = (0, _express2.default)();
@@ -132,15 +119,87 @@
 
 /***/ },
 /* 5 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	module.exports = require("mongoose");
+	'use strict';
+	"ues-strict";
+
+	var _nodeSchedule = __webpack_require__(6);
+
+	var _nodeSchedule2 = _interopRequireDefault(_nodeSchedule);
+
+	var _mailer = __webpack_require__(7);
+
+	var _firebaseConnector = __webpack_require__(9);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports.dispatch = {
+	  /**
+	  * @param {array} users Array of users to send mail to
+	  * @return {array} Array of email addresses
+	  **/
+	  recipients: function recipients(users) {
+	    return new Promise(function (resolve, reject) {
+	      if (users === undefined || null) reject("Users must be an array");
+	      var emails = users.map(function (user) {
+	        return user.email;
+	      });
+	      resolve(emails);
+	    });
+	  },
+
+	  /**
+	  * @param {array} recipients Array of reciepient emails
+	  * @return {string} A success message
+	  **/
+	  sendMail: function sendMail(recipients) {
+	    return new Promise(function (resolve, reject) {
+	      recipients.forEach(function (reciepient) {
+	        var data = {
+	          user: {
+	            email: reciepient
+	          },
+	          message: 'Test email',
+	          testmode: true
+	        };
+	        (0, _mailer.mailer)(data).catch(function (err) {
+	          reject(err);
+	        });
+	      });
+	      resolve('Emails sent!');
+	    });
+	  },
+	  schedule: function schedule() {
+	    var _this = this;
+
+	    // schedule the function to scan bills everyday at 6PM
+	    var rule = new _nodeSchedule2.default.RecurrenceRule();
+	    rule.dayOfWeek = [1, 2, 3, 4, 5];
+	    rule.hour = 19;
+	    rule.minute = 0;
+
+	    return new Promise(function (resolve, reject) {
+	      _nodeSchedule2.default.scheduleJob(rule, function () {
+	        _firebaseConnector.data.getUsers().then(function (users) {
+	          return _this.recipients(users);
+	        }).then(function (recipients) {
+	          return _this.sendMail(recipients);
+	        }).then(function (res) {
+	          resolve(res);
+	        }).catch(function (err) {
+	          reject(err);
+	        });
+	      });
+	    });
+	  }
+	};
 
 /***/ },
 /* 6 */
 /***/ function(module, exports) {
 
-	module.exports = require("firebase");
+	module.exports = require("node-schedule");
 
 /***/ },
 /* 7 */
@@ -148,17 +207,110 @@
 
 	'use strict';
 
-	var _graphqlTools = __webpack_require__(8);
+	var _mailgunJs = __webpack_require__(8);
 
-	var _underscore = __webpack_require__(9);
+	var _mailgunJs2 = _interopRequireDefault(_mailgunJs);
+
+	__webpack_require__(1);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var MAILGUN_API_KEY = process.env.MAILGUN_API_KEY;
+	var domain = process.env.MAILGUN_CHECKYOURREP_DOMAIN;
+	var mailgun = (0, _mailgunJs2.default)({ apiKey: MAILGUN_API_KEY, domain: domain });
+
+	module.exports.mailer = function (data) {
+
+	  var mail = {
+	    from: 'postmaster@checkyourrep.org',
+	    to: data.user.email,
+	    subjec: 'Your Bills',
+	    text: data.message,
+	    'o:testmode': data.testmode || false
+	  };
+
+	  return new Promise(function (resolve, reject) {
+	    mailgun.messages().send(mail).then(function (res) {
+	      resolve(res);
+	    }).catch(function (err) {
+	      reject(err);
+	    });
+	  });
+	};
+
+/***/ },
+/* 8 */
+/***/ function(module, exports) {
+
+	module.exports = require("mailgun-js");
+
+/***/ },
+/* 9 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _firebaseAdmin = __webpack_require__(10);
+
+	var _firebaseAdmin2 = _interopRequireDefault(_firebaseAdmin);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	_firebaseAdmin2.default.initializeApp({
+	  credential: _firebaseAdmin2.default.credential.cert({
+	    projectId: process.env.FIREBASE_PROJECT_ID,
+	    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+	    privateKey: process.env.FIREBASE_PRIVATE_KEY
+	  }),
+	  databaseURL: 'https://checkyourrep-bbfa4.firebaseio.com/'
+	});
+
+	module.exports.data = {
+	  getUserById: function getUserById(userId) {
+	    return new Promise(function (resolve, reject) {
+	      _firebaseAdmin2.default.auth().getUser(userId).then(function (user) {
+	        resolve(user.toJSON());
+	      }).catch(function (err) {
+	        reject(err);
+	      });
+	    });
+	  },
+	  getUsers: function getUsers() {
+	    return new Promise(function (resolve, reject) {
+	      var db = _firebaseAdmin2.default.database();
+	      var ref = db.ref("users");
+	      ref.on("value", function (snapshot) {
+	        resolve(snapshot.val());
+	      }, function (err) {
+	        reject(err);
+	      });
+	    });
+	  }
+	};
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	module.exports = require("firebase-admin");
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _graphqlTools = __webpack_require__(12);
+
+	var _underscore = __webpack_require__(13);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
-	var _congressSchema = __webpack_require__(10);
+	var _congressSchema = __webpack_require__(14);
 
 	var _congressSchema2 = _interopRequireDefault(_congressSchema);
 
-	var _congressResolvers = __webpack_require__(11);
+	var _congressResolvers = __webpack_require__(15);
 
 	var _congressResolvers2 = _interopRequireDefault(_congressResolvers);
 
@@ -170,19 +322,19 @@
 	});
 
 /***/ },
-/* 8 */
+/* 12 */
 /***/ function(module, exports) {
 
 	module.exports = require("graphql-tools");
 
 /***/ },
-/* 9 */
+/* 13 */
 /***/ function(module, exports) {
 
 	module.exports = require("underscore");
 
 /***/ },
-/* 10 */
+/* 14 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -195,7 +347,7 @@
 	exports.default = propublicaSchema;
 
 /***/ },
-/* 11 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -204,9 +356,9 @@
 	  value: true
 	});
 
-	var _propublicaConnector = __webpack_require__(12);
+	var _propublicaConnector = __webpack_require__(16);
 
-	var _sunlightConnector = __webpack_require__(14);
+	var _sunlightConnector = __webpack_require__(18);
 
 	var resolvers = {
 	  RootQuery: {
@@ -289,12 +441,12 @@
 	exports.default = resolvers;
 
 /***/ },
-/* 12 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _requestPromise = __webpack_require__(13);
+	var _requestPromise = __webpack_require__(17);
 
 	var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
@@ -304,7 +456,6 @@
 	var propublicaURL = 'https://api.propublica.org/congress/v1/';
 
 	// Propublica
-
 	/**
 	 * Get a Bill's subjects
 	 * @param {string} billId Bill slug
@@ -483,26 +634,26 @@
 	};
 
 /***/ },
-/* 13 */
+/* 17 */
 /***/ function(module, exports) {
 
 	module.exports = require("request-promise");
 
 /***/ },
-/* 14 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _requestPromise = __webpack_require__(13);
+	var _requestPromise = __webpack_require__(17);
 
 	var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
-	var _moment = __webpack_require__(15);
+	var _moment = __webpack_require__(19);
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _underscore = __webpack_require__(9);
+	var _underscore = __webpack_require__(13);
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
@@ -553,7 +704,7 @@
 	};
 
 /***/ },
-/* 15 */
+/* 19 */
 /***/ function(module, exports) {
 
 	module.exports = require("moment");
