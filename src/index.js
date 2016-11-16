@@ -2,8 +2,6 @@ import {} from 'dotenv/config';
 import express from 'express';
 import { graphqlExpress, graphiqlExpress } from 'graphql-server-express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
-import * as firebase from 'firebase';
 import { scheduler } from './lib/dispatch.js';
 
 import { graphqlSchema } from './api/index.js';
@@ -11,17 +9,6 @@ import { graphqlSchema } from './api/index.js';
 scheduler()
   .then((res) => { console.log(res) })
   .catch((err) => { throw err })
-
-// Firebase
-const firebaseConfig = {
-  apiKey: process.env.FIREBASE_API,
-  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.FIREBASE_URL,
-  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.FIREBASE_MESSAGING_ID
-};
-
-firebase.initializeApp(firebaseConfig);
 
 // Express
 var app = express()
