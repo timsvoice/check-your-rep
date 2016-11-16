@@ -6,7 +6,7 @@ import { dispatch } from './lib/dispatch.js';
 
 import { graphqlSchema } from './api/index.js';
 
-schedule()
+dispatch.scheduler()
   .then((res) => { console.log(res) })
   .catch((err) => { throw err })
 
