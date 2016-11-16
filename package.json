@@ -11,7 +11,6 @@
     "test-dev": "mocha -w ./src/test/ --require babel-register"
   },
   "dependencies": {
-    "apollo-client": "^0.5.4",
     "babel-cli": "^6.9.0",
     "babel-core": "^6.9.0",
     "babel-eslint": "^6.0.4",
@@ -27,19 +26,16 @@
     "dotenv": "^2.0.0",
     "express": "^4.13.3",
     "firebase": "^3.6.0",
-    "firebase-admin": "^4.0.2",
+    "firebase-admin": "^4.0.1",
     "firebase-auth": "^0.1.2",
     "graphql": "^0.7.0",
     "graphql-server-express": "^0.4.3",
-    "graphql-tag": "^0.1.16",
     "graphql-tools": "^0.8.1",
     "json-loader": "^0.5.4",
     "mailgun-js": "^0.7.13",
     "moment": "^2.16.0",
     "mongoose": "^4.6.7",
     "node-schedule": "^1.2.0",
-    "react": "^15.4.0",
-    "react-apollo": "^0.6.0",
     "request": "^2.78.0",
     "request-promise": "^4.1.1",
     "underscore": "^1.8.3"
