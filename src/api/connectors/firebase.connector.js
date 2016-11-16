@@ -1,18 +1,31 @@
-import rp from 'request-promise';
-import User from './connectors.js';
-import * as firebase from "firebase";
+import admin from 'firebase-admin';
 
-// Firebase
+admin.initializeApp({
+  credential: admin.credential.cert({
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY,
+  }),
+  databaseURL: 'https://checkyourrep-bbfa4.firebaseio.com/',
+});
 
-module.exports.user = {
-  update(id, mutation) {
-    firebase.database().ref(`users/${id}`).set( mutation )
-      .then((user) => { console.log(user) })
-      .catch((err) => { console.log(err) });
+module.exports.data = {
+  getUserById(userId) {
+    return new Promise((resolve, reject) => {
+      admin.auth().getUser(userId)
+        .then((user) => { resolve(user.toJSON()) })
+        .catch((err) => { reject(err) })
+    })
   },
-  delete(id) {
-    firebase.database().ref(`users/${id}`).remove()
-      .then((res) => { console.log(res) })
-      .catch((err) => { console.log(err) });
-  },
-};
+  getUsers() {
+    return new Promise((resolve, reject) => {
+      const db = admin.database();
+      const ref = db.ref("users");
+      ref.on("value", function(snapshot) {
+        resolve(snapshot.val())
+      }, function(err) {
+        reject(err)
+      })
+    })
+  }
+}
