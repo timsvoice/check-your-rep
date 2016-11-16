@@ -64,7 +64,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _dispatch.scheduler)().then(function (res) {
+	_dispatch.dispatch.scheduler().then(function (res) {
 	  console.log(res);
 	}).catch(function (err) {
 	  throw err;
@@ -176,14 +176,14 @@
 	      resolve('Emails sent!');
 	    });
 	  },
-	  schedule: function schedule() {
+	  scheduler: function scheduler() {
 	    var _this = this;
 
 	    // schedule the function to scan bills everyday at 6PM
 	    var rule = new _nodeSchedule2.default.RecurrenceRule();
 	    rule.dayOfWeek = [1, 2, 3, 4, 5];
-	    rule.hour = 11;
-	    rule.minute = 15;
+	    rule.hour = 13;
+	    rule.minute = 30;
 
 	    return new Promise(function (resolve, reject) {
 	      _nodeSchedule2.default.scheduleJob(rule, function () {

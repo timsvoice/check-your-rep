@@ -38,7 +38,7 @@ module.exports.dispatch = {
       resolve('Emails sent!');
     })
   },
-  schedule() {
+  scheduler() {
     // schedule the function to scan bills everyday at 6PM
     const rule = new schedule.RecurrenceRule();
     rule.dayOfWeek = [1,2,3,4,5];
