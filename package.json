@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha ./src/test/ --require babel-register",
     "client": "webpack",
-    "start": "webpack && node ./dist/app.js",
+    "deploy": "webpack && npm run test",
+    "start": "node ./dist/app.js",
     "start-dev": "babel-node ./src/index.js",
     "test-dev": "mocha -w ./src/test/ --require babel-register"
   },
