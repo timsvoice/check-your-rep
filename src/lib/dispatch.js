@@ -42,8 +42,8 @@ module.exports.dispatch = {
     // schedule the function to scan bills everyday at 6PM
     const rule = new schedule.RecurrenceRule();
     rule.dayOfWeek = [1,2,3,4,5];
-    rule.hour = 19;
-    rule.minute = 0;
+    rule.hour = 11;
+    rule.minute = 15;
 
     return new Promise((resolve, reject) => {
       schedule.scheduleJob(rule, () => {
