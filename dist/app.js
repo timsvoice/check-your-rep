@@ -76,6 +76,12 @@
 	app.set('port', process.env.PORT || 5000);
 	app.use(_express2.default.static(__dirname + '/public'));
 
+	// app.use((req, res, next) => {
+	//   res.header('Access-Control-Allow-Origin', '*');
+	//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+	//   next();
+	// })
+
 	app.use('/graphql', _bodyParser2.default.json(), (0, _graphqlServerExpress.graphqlExpress)({
 	  schema: _index.graphqlSchema
 	}));
@@ -176,8 +182,8 @@
 	    // schedule the function to scan bills everyday at 6PM
 	    var rule = new _nodeSchedule2.default.RecurrenceRule();
 	    rule.dayOfWeek = [1, 2, 3, 4, 5];
-	    rule.hour = 19;
-	    rule.minute = 0;
+	    rule.hour = 11;
+	    rule.minute = 15;
 
 	    return new Promise(function (resolve, reject) {
 	      _nodeSchedule2.default.scheduleJob(rule, function () {
