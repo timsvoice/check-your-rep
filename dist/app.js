@@ -64,7 +64,7 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	(0, _dispatch.scheduler)().then(function (res) {
+	schedule().then(function (res) {
 	  console.log(res);
 	}).catch(function (err) {
 	  throw err;
