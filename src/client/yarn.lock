@@ -1578,7 +1578,7 @@ graphql-anywhere@^0.2.4:
     lodash.merge "^4.6.0"
     lodash.pick "^4.2.0"
 
-graphql-tag@^0.1.13, graphql-tag@^0.1.15:
+graphql-tag@^0.1.13, graphql-tag@^0.1.16:
   version "0.1.16"
   resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-0.1.16.tgz#dc91350b19093b4771a013b55f32ee2290567c4e"
 
