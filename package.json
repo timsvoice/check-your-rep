@@ -8,6 +8,7 @@
     "client": "webpack",
     "deploy": "webpack && npm run test",
     "start": "node ./dist/app.js",
+    "start-client": "webpack-dev-server --content-base src/client",
     "start-dev": "babel-node ./src/index.js",
     "test-dev": "mocha -w ./src/test/ --require babel-register"
   },
@@ -35,8 +36,10 @@
     "graphql-tools": "^0.8.1",
     "json-loader": "^0.5.4",
     "mailgun-js": "^0.7.13",
+    "material-ui": "^0.16.3",
     "moment": "^2.16.0",
     "node-schedule": "^1.2.0",
+    "react-tap-event-plugin": "^2.0.1",
     "request": "^2.78.0",
     "request-promise": "^4.1.1",
     "underscore": "^1.8.3",
