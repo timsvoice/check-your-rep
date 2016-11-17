@@ -64,11 +64,7 @@
     "heroku",
     "express"
   ],
-  "author": "Mark Pundsack",
-  "contributors": [
-    "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com)",
-    "Jacques Crocker <jacques@nodeknockout.com> (https://www.nodeknockout.com)"
-  ],
+  "author": "Timothy Voice",
   "license": "MIT",
   "devDependencies": {
     "casual": "^1.5.8",
