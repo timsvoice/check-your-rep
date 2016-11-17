@@ -1,6 +1,7 @@
 
 module.exports = {
     entry: './index.js',
+    target: 'web',
     output: {
         path: '.',
         filename: 'index.bundle.js',
