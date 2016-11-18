@@ -45,6 +45,9 @@ const propublicaSchema = `
     state: String,
     missed_votes_pct: String,
     votes_with_party_pct: String,
+    email: String,
+    phone: String,
+    chamber: String
   }
 
   type MemberBill {
@@ -72,6 +75,7 @@ const propublicaSchema = `
     billsByKeywords(keywords: [ String ]): [ Bill ],
     member(chamber: String, first_name: String, last_name: String): Member,
     members(chamber: String): [ Member ],
+    membersLocal(zip_code: String): [ Member ],
     memberBills(memberId: String, type: String): [ Bill ],
     memberBillsByName(chamber: String, first_name: String, last_name: String, type: String): [ Bill ],
   }
