@@ -10,7 +10,7 @@ import gql from 'graphql-tag';
 import './style.scss';
 
 const RepresentativeList = ({ params, data }) => {
-  const representatives = data.members;
+  const representatives = data.membersLocal;
   return (
     <div>
       { !data.loading ?
@@ -31,14 +31,21 @@ const RepresentativeList = ({ params, data }) => {
 };
 
 const RepresentativeData = gql`
-  {
-    member(chamber:"senate", first_name:"Charles", last_name:"Schumer") {
+  query RootQuery($zip_code: String!) {
+    membersLocal(zip_code: $zip_code) {
+      id
       first_name
       last_name
       state
     }
   }`;
 
-const RepresentativesData = graphql(RepresentativeData)(RepresentativeList);
+const RepresentativesData = graphql(RepresentativeData, {
+  options: props => ({
+    variables: {
+      zip_code: props.params.zipQuery
+    }
+  }),
+})(RepresentativeList);
 
 export default RepresentativesData;
