@@ -32,13 +32,13 @@ const RepresentativeList = ({ params, data }) => {
 
 const RepresentativeData = gql`
   {
-    members(chamber:"house") {
+    member(chamber:"senate", first_name:"Charles", last_name:"Schumer") {
       first_name
       last_name
       state
     }
   }`;
 
-const RepresentativeListWithData = graphql(RepresentativeData)(RepresentativeList);
+const RepresentativesData = graphql(RepresentativeData)(RepresentativeList);
 
-export default RepresentativeListWithData;
+export default RepresentativesData;

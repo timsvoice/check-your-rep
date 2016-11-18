@@ -1,0 +1,12 @@
+.app-container {
+  width: 100%;
+  height: 100vh;
+}
+
+.app-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: -webkit-calc(100% - 64px);
+  height:    -moz-calc(100% - 64px);
+  height:         calc(100% - 64px);}

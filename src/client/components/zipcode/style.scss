@@ -1,6 +1,9 @@
 .zip-input-container {
   display: flex;
   flex-direction: column;
+  width: 25%;
+  min-width: 10rem;
+  padding: 5rem;
 }
 
 .primary-button {
