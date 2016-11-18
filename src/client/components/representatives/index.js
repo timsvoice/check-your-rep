@@ -18,9 +18,9 @@ const RepresentativeList = ({ params, data }) => {
           { representatives.map((representative) =>
             <ListItem
               key={ representative.id }
-              leftAvatar={<Avatar src='http://www.material-ui.com/images/ok-128.jpg' />}
+              leftAvatar={<Avatar src={ `https://theunitedstates.io/images/congress/225x275/${representative.id}.jpg` } />}
               primaryText={ `${representative.first_name} ${representative.last_name}` }
-              secondaryText={ representative.state }
+              secondaryText={ `${representative.chamber.toUpperCase()} - ${representative.state}` }
               rightToggle={<Toggle />}
             />
           )}
@@ -37,6 +37,7 @@ const RepresentativeData = gql`
       first_name
       last_name
       state
+      chamber
     }
   }`;
 
