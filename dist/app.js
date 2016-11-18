@@ -355,7 +355,7 @@
 	  value: true
 	});
 	// GraphQL
-	var propublicaSchema = "\n  type Subject {\n    name: String,\n  }\n\n  type Action {\n    datetime: String,\n    description: String,\n  }\n\n  type Bill {\n    number: String,\n    bill_uri: String,\n    title: String,\n    summary: String,\n    sponsor: String,\n    introduced_date: String,\n    cosponsors: Int,\n    actions: [Action],\n    subjects: [Subject],\n  }\n\n  type Member {\n    id: String,\n    thomas_id: String,\n    api_uri: String,\n    first_name: String,\n    middle_name: String,\n    last_name: String,\n    party: String,\n    twitter_account: String,\n    facebook_account: String,\n    facebook_id: String,\n    url: String,\n    rss_url: String,\n    domain: String,\n    dw_nominate: String,\n    ideal_point: String,\n    seniority: String,\n    next_election: String,\n    total_votes: String,\n    missed_votes: String,\n    total_present: String,\n    state: String,\n    missed_votes_pct: String,\n    votes_with_party_pct: String,\n  }\n\n  type MemberBill {\n    congress: String,\n    number: String\n    bill: String,\n    url_number: String,\n    title: String,\n    sponsor: String,\n    sponsor_id: String,\n    introduced_date: String,\n    number_of_cosponsors: String,\n    committees: String,\n    latest_major_action_date: String,\n    latest_major_action: String,\n    house_passage_vote: String,\n    senate_passage_vote: String,\n    subjects: [Subject],\n  }\n\n  # the schema allows the following query:\n  type RootQuery {\n    bill(billId: String): Bill,\n    bills(chamber: String, type: String): [ Bill ],\n    billsByKeywords(keywords: [ String ]): [ Bill ],\n    member(chamber: String, first_name: String, last_name: String): Member,\n    members(chamber: String): [ Member ],\n    memberBills(memberId: String, type: String): [ Bill ],\n    memberBillsByName(chamber: String, first_name: String, last_name: String, type: String): [ Bill ],\n  }\n\n  # we need to tell the server which types represent the root query\n  # and root mutation types. We call them RootQuery and RootMutation by convention.\n  schema {\n    query: RootQuery\n  }\n";
+	var propublicaSchema = "\n  type Subject {\n    name: String,\n  }\n\n  type Action {\n    datetime: String,\n    description: String,\n  }\n\n  type Bill {\n    number: String,\n    bill_uri: String,\n    title: String,\n    summary: String,\n    sponsor: String,\n    introduced_date: String,\n    cosponsors: Int,\n    actions: [Action],\n    subjects: [Subject],\n  }\n\n  type Member {\n    id: String,\n    thomas_id: String,\n    api_uri: String,\n    first_name: String,\n    middle_name: String,\n    last_name: String,\n    party: String,\n    twitter_account: String,\n    facebook_account: String,\n    facebook_id: String,\n    url: String,\n    rss_url: String,\n    domain: String,\n    dw_nominate: String,\n    ideal_point: String,\n    seniority: String,\n    next_election: String,\n    total_votes: String,\n    missed_votes: String,\n    total_present: String,\n    state: String,\n    missed_votes_pct: String,\n    votes_with_party_pct: String,\n    email: String,\n    phone: String,\n    chamber: String\n  }\n\n  type MemberBill {\n    congress: String,\n    number: String\n    bill: String,\n    url_number: String,\n    title: String,\n    sponsor: String,\n    sponsor_id: String,\n    introduced_date: String,\n    number_of_cosponsors: String,\n    committees: String,\n    latest_major_action_date: String,\n    latest_major_action: String,\n    house_passage_vote: String,\n    senate_passage_vote: String,\n    subjects: [Subject],\n  }\n\n  # the schema allows the following query:\n  type RootQuery {\n    bill(billId: String): Bill,\n    bills(chamber: String, type: String): [ Bill ],\n    billsByKeywords(keywords: [ String ]): [ Bill ],\n    member(chamber: String, first_name: String, last_name: String): Member,\n    members(chamber: String): [ Member ],\n    membersLocal(zip_code: String): [ Member ],\n    memberBills(memberId: String, type: String): [ Bill ],\n    memberBillsByName(chamber: String, first_name: String, last_name: String, type: String): [ Bill ],\n  }\n\n  # we need to tell the server which types represent the root query\n  # and root mutation types. We call them RootQuery and RootMutation by convention.\n  schema {\n    query: RootQuery\n  }\n";
 	exports.default = propublicaSchema;
 
 /***/ },
@@ -423,9 +423,19 @@
 	        throw err;
 	      });
 	    },
-	    memberBills: function memberBills(_, _ref6) {
-	      var memberId = _ref6.memberId,
-	          type = _ref6.type;
+	    membersLocal: function membersLocal(_, _ref6) {
+	      var zip_code = _ref6.zip_code;
+
+	      return _sunlightConnector.congress.getLocalMembers(zip_code);
+	      then(function (members) {
+	        return members;
+	      }).catch(function (err) {
+	        throw err;
+	      });
+	    },
+	    memberBills: function memberBills(_, _ref7) {
+	      var memberId = _ref7.memberId,
+	          type = _ref7.type;
 
 	      return _propublicaConnector.congress.getMemberBills(memberId, type).then(function (bills) {
 	        return bills;
@@ -433,11 +443,11 @@
 	        throw err;
 	      });
 	    },
-	    memberBillsByName: function memberBillsByName(_, _ref7) {
-	      var chamber = _ref7.chamber,
-	          first_name = _ref7.first_name,
-	          last_name = _ref7.last_name,
-	          type = _ref7.type;
+	    memberBillsByName: function memberBillsByName(_, _ref8) {
+	      var chamber = _ref8.chamber,
+	          first_name = _ref8.first_name,
+	          last_name = _ref8.last_name,
+	          type = _ref8.type;
 
 	      return _propublicaConnector.congress.getMember(chamber, first_name, last_name).then(function (member) {
 	        return _propublicaConnector.congress.getMemberBills(member.id, type);
@@ -674,6 +684,40 @@
 	var sunlightURL = 'https://congress.api.sunlightfoundation.com';
 
 	module.exports.congress = {
+	  /**
+	  * Get a list of local members by zipcode
+	  * @param {string} zip_code A user's zipcode
+	  **/
+	  getLocalMembers: function getLocalMembers(zip_code) {
+	    var url = sunlightURL + '/legislators/locate?zip=' + zip_code;
+	    return new Promise(function (resolve, reject) {
+	      (0, _requestPromise2.default)(url).then(function (res) {
+	        return JSON.parse(res);
+	      }).then(function (members) {
+	        resolve(members.results.map(function (member) {
+	          var normMember = {
+	            id: member.bioguide_id,
+	            thomas_id: member.thomas_id,
+	            first_name: member.first_name,
+	            middle_name: member.middle_name,
+	            last_name: member.last_name,
+	            party: member.party,
+	            twitter_account: member.twitter_id,
+	            facebook_id: member.facebook_id,
+	            domain: member.website,
+	            state: member.state,
+	            email: member.oc_email,
+	            phone: member.phone,
+	            chamber: member.chamber
+	          };
+	          return normMember;
+	        }));
+	      }).catch(function (err) {
+	        reject(err);
+	      });
+	    });
+	  },
+
 	  /**
 	  * Get a bill by proving a list of keywords
 	  * @param {array} keywords An Array of user keywords

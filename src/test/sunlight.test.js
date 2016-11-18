@@ -22,5 +22,11 @@ describe('The Sunlight API', function() {
     return assert.eventually.isArray(
       congress.getBillsByKeywords(keywords, date),
     );
+  }),
+  it('shoudl return a list of members for a given zipcode', function() {
+    const zip_code = '11218';
+    return assert.eventually.isArray(
+      congress.getLocalMembers(zip_code)
+    )
   })
 })

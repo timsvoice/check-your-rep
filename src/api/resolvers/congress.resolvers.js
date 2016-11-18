@@ -28,6 +28,11 @@ const resolvers = {
         .then((members) => { return members; })
         .catch((err) => { throw err; })
     },
+    membersLocal(_, { zip_code }) {
+      return sunlightCongress.getLocalMembers(zip_code)
+        then((members) => { return members })
+        .catch((err) => { throw err; })
+    },
     memberBills(_, { memberId, type }) {
       return congress.getMemberBills(memberId, type)
         .then((bills) => { return bills; })
