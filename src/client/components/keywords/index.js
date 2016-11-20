@@ -18,18 +18,18 @@ const KeywordsList = React.createClass({
   render() {
     return (
       <div>
-          <AutoComplete
-            hintText="Find an Issue (e.g. type academic)"
-            dataSource={this.state.keywords}
-            filter={AutoComplete.caseInsensitiveFilter}
-            filter={AutoComplete.fuzzyFilter}
-            maxSearchResults={3}
-          />
-          <RaisedButton
-            label="Add"
-            primary={true}
-            className="primary-button"
-          />
+        <AutoComplete
+          hintText="Find an Issue (e.g. type academic)"
+          dataSource={this.state.keywords}
+          filter={AutoComplete.caseInsensitiveFilter}
+          filter={AutoComplete.fuzzyFilter}
+          maxSearchResults={3}
+        />
+        <RaisedButton
+          label="Add"
+          primary={true}
+          className="primary-button"
+        />
       </div>
     )
   }
