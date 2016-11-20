@@ -27,8 +27,13 @@ app.use('/graphiql', graphiqlExpress({
   endpointURL: '/graphql',
 }));
 
-app.get('/', function(request, response) {
-  response.send('Check Your Rep!')
+// serve static assets normally
+app.use(express.static(__dirname + './src/client/public'))
+
+// handle every other route with index.html, which will contain
+// a script tag to your application's JavaScript file(s).
+app.get('*', function (request, response){
+  response.sendFile(path.resolve(__dirname, './src/client/public', './src/client/index.html'))
 })
 
 app.listen(app.get('port'), function() {

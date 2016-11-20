@@ -18,11 +18,7 @@ import KeywordsList from './components/keywords/index.js';
 // http://stackoverflow.com/a/34015469/988941
 injectTapEventPlugin();
 
-const client = new ApolloClient({
-  networkInterface: createNetworkInterface({
-    uri: 'http://checkyourrep-api-env.us-west-2.elasticbeanstalk.com/graphql'
-  })
-})
+const client = new ApolloClient();
 
 ReactDOM.render((
   <ApolloProvider client={client}>
