@@ -12,6 +12,7 @@ import './styles/style.scss';
 import AppContainer from './containers/app-container/index.js';
 import ZipInput from './components/zipcode/index.js';
 import RepresentativesData from './components/representatives/index.js';
+import KeywordsList from './components/keywords/index.js';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -29,6 +30,7 @@ ReactDOM.render((
         <Route path="/" component={AppContainer} >
           <IndexRoute component={ZipInput} />
           <Route path="/zipcode=:zipQuery" component={RepresentativesData}/>
+          <Route path="/keywords" component={KeywordsList}/>
         </Route>
     </Router>
   </ApolloProvider>),

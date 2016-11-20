@@ -1,8 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router';
 import Avatar from 'material-ui/Avatar';
 import Toggle from 'material-ui/Toggle';
 import {List, ListItem} from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
+import RaisedButton from 'material-ui/RaisedButton';
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -26,6 +28,13 @@ const RepresentativeList = ({ params, data }) => {
           )}
         </List>
       : <CircularProgress /> }
+      <Link to="/keywords">
+        <RaisedButton
+          label="Keywords"
+          primary={true}
+          className="primary-button"
+        />
+      </Link>
     </div>
   )
 };
