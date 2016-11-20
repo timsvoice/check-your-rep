@@ -7,7 +7,7 @@
     "test": "mocha ./src/test/ --require babel-register",
     "client": "webpack",
     "deploy": "webpack && npm run test && git push",
-    "start": "node ./dist/app.js",
+    "start": "webpack && node dist/app.js",
     "start-client": "webpack-dev-server --content-base src/client",
     "start-dev": "babel-node ./src/index.js",
     "test-dev": "mocha -w ./src/test/ --require babel-register"
