@@ -69490,7 +69490,6 @@
 	        label: 'Save',
 	        primary: true,
 	        className: 'primary-button',
-	        onClick: this.handleClick,
 	        disabled: this.state.user_keywords.length === 0
 	      })
 	    );
