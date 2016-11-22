@@ -1,5 +1,6 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
+import store from 'store';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -11,18 +12,18 @@ const ZipInput = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
     const zipQuery = e.target.zipcode.value;
-    console.log(e);
-    browserHistory.push(`zipcode=${zipQuery}`);
+    store.set('zipcode', zipQuery);
+    this.props.handleNext();
   },
   render() {
     return (
-      <Paper>
         <div className="zip-input-container">
           <form onSubmit={this.handleSubmit}>
             <h2>Zip Code</h2>
             <TextField
               id="zipcode"
               hintText="Your Zip Code"
+              defaultValue={store.get('zipcode')}
             />
             <RaisedButton
               label="Find"
@@ -32,7 +33,6 @@ const ZipInput = React.createClass({
             />
           </form>
         </div>
-      </Paper>
     );
   }
 });
