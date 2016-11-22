@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import Paper from 'material-ui/Paper';
 import {
   Step,
@@ -46,9 +47,9 @@ const StepperContainer = React.createClass({
       case 0:
         return <ZipInput handleNext={this.handleNext} />;
       case 1:
-        return <RepresentativeData handleNext={this.handleNext} handlePrevious={this.handlePrevious} />;
+        return <RepresentativeData handleNext={this.handleNext} handlePrev={this.handlePrev} />;
       case 2:
-        return <KeywordsList handleNext={this.handleFinished} handlePrevious={this.handlePrevious} />;
+        return <KeywordsList handleNext={this.handleFinished} handlePrev={this.handlePrev} handleNext={this.handleFinished} />;
       default:
         return <ZipInput handleNext={this.handleNext} />;
     }

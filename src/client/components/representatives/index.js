@@ -1,10 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router';
+
 import Avatar from 'material-ui/Avatar';
 import Toggle from 'material-ui/Toggle';
 import {List, ListItem} from 'material-ui/List';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+
+import StepperNavigaiton from '../buttons/index.js';
+
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
 import store from 'store';
@@ -13,14 +18,11 @@ import _ from 'underscore';
 import './style.scss';
 
 const RepresentativeList = React.createClass({
-  componentWillMount() {
-    // this.representatives = this.props.data.membersLocal;
-    // if (!this.props.data.loading) console.log(this.props.data);
-  },
   addRepresentative(id) {
     let repList, newRepList, repObj;
 
-    repList = store.get('representatives') || {};
+    repList = {};
+    if (store.get('representatives')) repList = store.get('representatives');
 
     switch(_.has(repList, id)) {
       case true:
@@ -35,14 +37,25 @@ const RepresentativeList = React.createClass({
     }
 
     store.set('representatives', newRepList);
+    this.forceUpdate();
 
   },
   isToggled(id) {
-    const reps = store.get('representatives')
-    if (reps) {
-      return _.has(reps, id)
-    }
+    const repList = store.get('representatives');
+
+    if (repList) return _.has(repList, id)
+
     return false;
+  },
+  nextIsDisabled() {
+    if (
+      store.get('representatives') === undefined ||
+      Object.keys(store.get('representatives')).length > 0
+    ) {
+      return false;
+    }
+
+    return true;
   },
   render() {
     if (!this.props.data.loading) console.log(this);
@@ -56,15 +69,21 @@ const RepresentativeList = React.createClass({
                 leftAvatar={<Avatar src={ `https://theunitedstates.io/images/congress/225x275/${representative.id}.jpg` } />}
                 primaryText={ `${representative.first_name} ${representative.last_name}` }
                 secondaryText={ `${representative.chamber.toUpperCase()} - ${representative.state}` }
-                rightToggle={ <Toggle onToggle={ () => { this.addRepresentative(representative.id) } } defaultToggled={ this.isToggled(representative.id) }  /> }
+                rightToggle={
+                  <Toggle
+                    onToggle={ () => { this.addRepresentative(representative.id) }}
+                    defaultToggled={ this.isToggled(representative.id) }
+                  />
+                }
               />
             )}
           </List>
         : <CircularProgress /> }
-        <RaisedButton
-          label="Keywords"
-          primary={true}
-          className="primary-button"
+        <StepperNavigaiton
+          handlePrev={ this.props.handlePrev }
+          handleNext={ this.props.handleNext }
+          nextType="submit"
+          nextIsDisabled={ this.nextIsDisabled() }
         />
       </div>
     )
