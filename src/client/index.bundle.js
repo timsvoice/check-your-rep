@@ -69070,21 +69070,25 @@
 	    // if (!this.props.data.loading) console.log(this.props.data);
 	  },
 	  addRepresentative: function addRepresentative(id) {
-	    var repList = void 0;
-	    if (_store2.default.get('representatives')) {
-	      repList = _store2.default.get('representatives');
-	    } else {
-	      repList = {};
+	    var repList = void 0,
+	        newRepList = void 0,
+	        repObj = void 0;
+
+	    repList = _store2.default.get('representatives') || {};
+
+	    switch (_underscore2.default.has(repList, id)) {
+	      case true:
+	        delete repList[id];
+	        newRepList = repList;
+	        break;
+	      case false:
+	        repObj = {};
+	        repObj[id] = true;
+	        newRepList = _underscore2.default.extend(repList, repObj);
+	        break;
 	    }
-	    if (_underscore2.default.has(repList, id)) {
-	      delete repList[id];
-	      _store2.default.set('representatives', repList);
-	    } else {
-	      var repObj = {};
-	      repObj[id] = true;
-	      var newRepList = _underscore2.default.extend(repList, repObj);
-	      _store2.default.set('representatives', newRepList);
-	    }
+
+	    _store2.default.set('representatives', newRepList);
 	  },
 	  isToggled: function isToggled(id) {
 	    var reps = _store2.default.get('representatives');

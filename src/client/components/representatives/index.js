@@ -20,13 +20,9 @@ const RepresentativeList = React.createClass({
   addRepresentative(id) {
     let repList, newRepList, repObj;
 
-    if (store.get('representatives')) {
-      repList = store.get('representatives');
-    } else {
-      repList = {};
-    }
+    repList = store.get('representatives') || {};
 
-    switch(_.has(repList, id))
+    switch(_.has(repList, id)) {
       case true:
         delete repList[id];
         newRepList = repList;
@@ -36,6 +32,7 @@ const RepresentativeList = React.createClass({
         repObj[id] = true;
         newRepList = _.extend(repList, repObj);
         break;
+    }
 
     store.set('representatives', newRepList);
 
