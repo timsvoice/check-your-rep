@@ -18,21 +18,27 @@ const RepresentativeList = React.createClass({
     // if (!this.props.data.loading) console.log(this.props.data);
   },
   addRepresentative(id) {
-    let repList;
+    let repList, newRepList, repObj;
+
     if (store.get('representatives')) {
       repList = store.get('representatives');
     } else {
       repList = {};
     }
-    if (_.has(repList, id)) {
-      delete repList[id];
-      store.set('representatives', repList);
-    } else {
-      let repObj = {};
-      repObj[id] = true;
-      const newRepList = _.extend(repList, repObj);
-      store.set('representatives', newRepList);
-    }
+
+    switch(_.has(repList, id))
+      case true:
+        delete repList[id];
+        newRepList = repList;
+        break;
+      case false:
+        repObj = {};
+        repObj[id] = true;
+        newRepList = _.extend(repList, repObj);
+        break;
+
+    store.set('representatives', newRepList);
+
   },
   isToggled(id) {
     const reps = store.get('representatives')
