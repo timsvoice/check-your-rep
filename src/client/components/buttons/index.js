@@ -13,7 +13,7 @@ const StepperNavigaiton = React.createClass({
           disabled={ this.props.prevIsDisabled || false }
         />
         <RaisedButton
-          label="Next"
+          label={this.props.nextLabel || "Next" }
           primary={true}
           className="next-button"
           onClick={ this.props.handleNext }

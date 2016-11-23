@@ -68751,7 +68751,7 @@
 	        disabled: this.props.prevIsDisabled || false
 	      }),
 	      _react2.default.createElement(_RaisedButton2.default, {
-	        label: 'Next',
+	        label: this.props.nextLabel || "Next",
 	        primary: true,
 	        className: 'next-button',
 	        onClick: this.props.handleNext,
@@ -76629,6 +76629,24 @@
 
 	var _Avatar2 = _interopRequireDefault(_Avatar);
 
+	var _RaisedButton = __webpack_require__(596);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	var _FlatButton = __webpack_require__(598);
+
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+
+	var _TextField = __webpack_require__(532);
+
+	var _TextField2 = _interopRequireDefault(_TextField);
+
+	var _colors = __webpack_require__(423);
+
+	var _index = __webpack_require__(601);
+
+	var _index2 = _interopRequireDefault(_index);
+
 	__webpack_require__(649);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -76636,46 +76654,42 @@
 	var SignupPage = _react2.default.createClass({
 	  displayName: 'SignupPage',
 	  signUp: function signUp() {},
-	  userRepresentatives: function userRepresentatives() {
-	    var representatives = _store2.default.get('representatives');
-	    if (_store2.default.get('representatives') === undefined || Object.keys(_store2.default.get('representatives')).length > 0) {
-	      var representativesArray = _underscore2.default.map(representatives, function (keyword, key) {
-	        return key;
-	      });
-	      return representativesArray;
-	    }
-	  },
-	  userKeywords: function userKeywords() {
-	    var user_keywords = _store2.default.get('user_keywords');
-	    if (_store2.default.get('user_keywords') === undefined || Object.keys(_store2.default.get('user_keywords')).length > 0) {
-	      var keywordArray = _underscore2.default.map(user_keywords, function (keyword, key) {
-	        return key;
-	      });
-	      return keywordArray;
-	    }
-	  },
 	  render: function render() {
 	    return _react2.default.createElement(
 	      'div',
 	      { className: 'signup-container' },
 	      _react2.default.createElement(
-	        _List.List,
-	        null,
-	        this.userRepresentatives().map(function (representative) {
-	          return _react2.default.createElement(_List.ListItem, {
-	            key: representative.id,
-	            leftAvatar: _react2.default.createElement(_Avatar2.default, { src: 'https://theunitedstates.io/images/congress/225x275/' + representative.id + '.jpg' }),
-	            primaryText: representative.first_name + ' ' + representative.last_name,
-	            secondaryText: representative.chamber.toUpperCase() + ' - ' + representative.state
-	          });
+	        'form',
+	        { className: 'singup-fields' },
+	        _react2.default.createElement(_TextField2.default, {
+	          hintText: 'email'
+	        }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(_TextField2.default, {
+	          hintText: 'password'
+	        }),
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(_RaisedButton2.default, {
+	          label: 'Signup',
+	          labelPosition: 'before',
+	          primary: true,
+	          type: 'submit'
 	        })
 	      ),
-	      this.userKeywords().map(function (keyword) {
-	        return _react2.default.createElement(
-	          _Chip2.default,
-	          { key: keyword },
-	          keyword
-	        );
+	      _react2.default.createElement(_FlatButton2.default, {
+	        label: 'Google',
+	        labelPosition: 'before',
+	        backgroundColor: _colors.red500
+	      }),
+	      _react2.default.createElement(_FlatButton2.default, {
+	        label: 'Twitter',
+	        labelPosition: 'before',
+	        backgroundColor: _colors.blue500
+	      }),
+	      _react2.default.createElement(_index2.default, {
+	        handlePrev: this.props.handlePrev,
+	        handleNext: this.props.handleNext,
+	        nextLabel: 'Signup'
 	      })
 	    );
 	  }
