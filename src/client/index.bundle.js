@@ -69000,54 +69000,22 @@
 	  handleClick: function handleClick(e) {
 	    e.preventDefault();
 	    var keyword = this.refs.keywordValue.state.searchText;
-	    var keywordList = void 0,
-	        keywordObj = void 0,
-	        newKeywordList = void 0;
-
-	    keywordList = {};
-	    if (_store2.default.get('user_keywords')) keywordList = _store2.default.get('user_keywords');
-
-	    keywordObj = {};
-	    keywordObj[keyword] = true;
-	    newKeywordList = _underscore2.default.extend(keywordList, keywordObj);
-
-	    _store2.default.set('user_keywords', newKeywordList);
-
-	    this.refs.keywordValue.setState({
-	      searchText: ''
-	    });
-
+	    this.props.userKeywords.push(keyword);
+	    this.refs.keywordValue.setState({ searchText: '' });
 	    this.forceUpdate();
 	  },
 	  handleDelete: function handleDelete(keyword) {
-	    var keywordsList = _store2.default.get('user_keywords');
-	    delete keywordsList[keyword];
-	    var newKeywordList = keywordsList;
-	    _store2.default.set('user_keywords', newKeywordList);
+	    this.props.userKeywords.splice(keyword);
 	    this.forceUpdate();
 	  },
 	  nextIsDisabled: function nextIsDisabled() {
-	    if (_store2.default.get('user_keywords') === undefined || Object.keys(_store2.default.get('user_keywords')).length > 0) {
-	      return false;
-	    }
-
-	    return true;
-	  },
-	  userKeywords: function userKeywords() {
-	    var user_keywords = _store2.default.get('user_keywords');
-	    if (_store2.default.get('user_keywords') === undefined || Object.keys(_store2.default.get('user_keywords')).length > 0) {
-	      var keywordArray = _underscore2.default.map(user_keywords, function (keyword, key) {
-	        return key;
-	      });
-	      console.log(keywordArray);
-	      return keywordArray;
-	    }
+	    if (this.props.userKeywords.length < 1) return true;
+	    return false;
 	  },
 	  render: function render() {
 	    var _React$createElement,
 	        _this = this;
 
-	    var user_keywords = this.state.user_keywords;
 	    return _react2.default.createElement(
 	      'div',
 	      null,
@@ -69067,7 +69035,7 @@
 	          onClick: this.handleClick
 	        })
 	      ) : _react2.default.createElement(_CircularProgress2.default, null),
-	      this.userKeywords() ? this.userKeywords().map(function (keyword) {
+	      this.props.userKeywords.length > 0 ? this.props.userKeywords.map(function (keyword) {
 	        return _react2.default.createElement(
 	          _Chip2.default,
 	          {

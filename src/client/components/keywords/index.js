@@ -23,56 +23,20 @@ const KeywordsList = React.createClass({
   },
   handleClick(e) {
     e.preventDefault();
-    let keyword = this.refs.keywordValue.state.searchText;
-    let keywordList, keywordObj, newKeywordList;
-
-    keywordList = {};
-    if (store.get('user_keywords')) keywordList = store.get('user_keywords');
-
-    keywordObj = {};
-    keywordObj[keyword] = true;
-    newKeywordList = _.extend(keywordList, keywordObj);
-
-    store.set('user_keywords', newKeywordList);
-
-    this.refs.keywordValue.setState({
-      searchText: ''
-    })
-
+    const keyword = this.refs.keywordValue.state.searchText;
+    this.props.userKeywords.push(keyword);
+    this.refs.keywordValue.setState({ searchText: '' });
     this.forceUpdate();
   },
   handleDelete(keyword) {
-    let keywordsList = store.get('user_keywords');
-    delete keywordsList[keyword];
-    let newKeywordList = keywordsList;
-    store.set('user_keywords', newKeywordList);
+    this.props.userKeywords.splice(keyword);
     this.forceUpdate();
   },
   nextIsDisabled() {
-    if (
-      store.get('user_keywords') === undefined ||
-      Object.keys(store.get('user_keywords')).length > 0
-    ) {
-      return false;
-    }
-
-    return true;
-  },
-  userKeywords() {
-    const user_keywords = store.get('user_keywords');
-    if (
-      store.get('user_keywords') === undefined ||
-      Object.keys(store.get('user_keywords')).length > 0
-    ) {
-      let keywordArray = _.map(user_keywords, (keyword, key) => {
-        return key;
-      })
-      console.log(keywordArray);
-      return keywordArray;
-    }
+    if (this.props.userKeywords.length < 1) return true;
+    return false
   },
   render() {
-    const user_keywords = this.state.user_keywords;
     return (
       <div>
           { this.state.keywords ?
@@ -96,14 +60,12 @@ const KeywordsList = React.createClass({
             </div>
           : <CircularProgress /> }
 
-          { this.userKeywords() ?
-            this.userKeywords().map((keyword) =>
+          { this.props.userKeywords.length > 0 ?
+            this.props.userKeywords.map((keyword) =>
               <Chip
                 key={keyword}
                 onRequestDelete={() => {this.handleDelete(keyword)}}
-              >
-                { keyword }
-              </Chip>
+              >{ keyword }</Chip>
             )
           : <h1>Select Your Keywords</h1> }
           <StepperNavigaiton
