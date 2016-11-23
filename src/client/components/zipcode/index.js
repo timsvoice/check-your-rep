@@ -1,6 +1,5 @@
 import React from 'react';
 import { browserHistory, Link } from 'react-router';
-import store from 'store';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -14,11 +13,12 @@ import './style.scss';
 const ZipInput = React.createClass({
   handleSubmit(e) {
     e.preventDefault();
+    console.log(this);
     const zipQuery = e.target.zipcode.value;
     if (zipQuery.length < 5 ) {
       alert('Please enter valid 5 digit zipcode')
     } else {
-      store.set('zipcode', zipQuery);
+      this.props.updateZipcode(zipQuery);
       this.props.handleNext();
     }
   },
@@ -30,7 +30,7 @@ const ZipInput = React.createClass({
             <TextField
               id="zipcode"
               hintText="Your Zip Code"
-              defaultValue={store.get('zipcode')}
+              defaultValue={this.props.zipcode}
             />
             <StepperNavigaiton
               handlePrev={ this.handlePrev }

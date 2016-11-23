@@ -12,53 +12,37 @@ import StepperNavigaiton from '../buttons/index.js';
 
 import { graphql } from 'react-apollo';
 import gql from 'graphql-tag';
-import store from 'store';
 import _ from 'underscore';
 
 import './style.scss';
 
 const RepresentativeList = React.createClass({
-  addRepresentative(id) {
-    let repList, newRepList, repObj;
-
-    repList = {};
-    if (store.get('representatives')) repList = store.get('representatives');
-
-    switch(_.has(repList, id)) {
-      case true:
-        delete repList[id];
-        newRepList = repList;
+  isToggled(representative) {
+    switch( _.indexOf(_.pluck(this.props.userRepresentatives, 'id'), representative.id)) {
+      case -1:
+        return false;
         break;
-      case false:
-        repObj = {};
-        repObj[id] = true;
-        newRepList = _.extend(repList, repObj);
+      default:
+        return true;
         break;
     }
-
-    store.set('representatives', newRepList);
-    this.forceUpdate();
-
-  },
-  isToggled(id) {
-    const repList = store.get('representatives');
-
-    if (repList) return _.has(repList, id)
-
-    return false;
   },
   nextIsDisabled() {
-    if (
-      store.get('representatives') === undefined ||
-      Object.keys(store.get('representatives')).length > 0
-    ) {
-      return false;
+    if ( this.props.userRepresentatives.length < 1 ) return true
+    return false;
+  },
+  toggleRepresentative(representative) {
+    switch( _.indexOf(_.pluck(this.props.userRepresentatives, 'id'), representative.id)) {
+      case -1:
+        this.props.addRepresentative(representative, 'userRepresentatives');
+        break;
+      default:
+        this.props.removeRepresentative(representative, 'userRepresentatives');
+        break;
     }
-
-    return true;
+    this.forceUpdate();
   },
   render() {
-    if (!this.props.data.loading) console.log(this);
     return (
       <div>
         { !this.props.data.loading ?
@@ -71,8 +55,10 @@ const RepresentativeList = React.createClass({
                 secondaryText={ `${representative.chamber.toUpperCase()} - ${representative.state}` }
                 rightToggle={
                   <Toggle
-                    onToggle={ () => { this.addRepresentative(representative.id) }}
-                    defaultToggled={ this.isToggled(representative.id) }
+                    onToggle={ () => {
+                      this.toggleRepresentative(representative)
+                    }}
+                    defaultToggled={ this.isToggled(representative) }
                   />
                 }
               />
@@ -102,11 +88,7 @@ const RepresentativeData = gql`
   }`;
 
 const RepresentativesData = graphql(RepresentativeData, {
-  options: props => ({
-    variables: {
-      zip_code: store.get('zipcode')
-    }
-  }),
+  options: ( ownProps ) => ({ variables: { zip_code: ownProps.zipcode } }),
 })(RepresentativeList);
 
 export default RepresentativesData;

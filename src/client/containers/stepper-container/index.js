@@ -1,16 +1,10 @@
 import React from 'react';
-import { browserHistory } from 'react-router';
-import Paper from 'material-ui/Paper';
 import {
   Step,
   Stepper,
   StepLabel,
 } from 'material-ui/Stepper';
-import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import MapsPinDrop from 'material-ui/svg-icons/maps/pin-drop';
-import ActionAccountBalance from 'material-ui/svg-icons/action/account-balance';
-import ActionSpeakerNotes from 'material-ui/svg-icons/action/speaker-notes';
+import _ from 'underscore';
 
 import ZipInput from '../../components/zipcode/index.js';
 import RepresentativeData from '../../components/representatives/index.js';
@@ -22,6 +16,9 @@ const StepperContainer = React.createClass({
     this.setState({
       finished: false,
       stepIndex: 0,
+      userZipcode: null,
+      userRepresentatives: [],
+      userKeywords: [],
     });
   },
   handleNext() {
@@ -41,20 +38,70 @@ const StepperContainer = React.createClass({
     this.setState({
       finished: true
     });
-    browserHistory.push('/signup')
+  },
+  updateZipcode(zipcode) {
+    this.setState({
+      userZipcode: zipcode
+    })
+  },
+  addRecord(record, type) {
+    switch(type) {
+      case 'userRepresentatives':
+        this.state.userRepresentatives.push(record);
+        break;
+      case 'userKeywords':
+        this.state.userKeywords.push(record);
+        break;
+    }
+  },
+  removeRecord(record, type) {
+    switch(type) {
+      case 'userRepresentatives':
+        const recordId = _.indexOf(_.pluck(this.state.userRepresentatives, 'id'), record.id);
+        this.state.userRepresentatives.splice(recordId, 1);
+        break;
+      case 'userKeywords':
+        this.state.userKeywords.splice(record, 1);
+        break;
+    }
   },
   getStepContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <ZipInput handleNext={this.handleNext} />;
+        return  <ZipInput
+                  handleNext={this.handleNext}
+                  updateZipcode={this.updateZipcode}
+                  zipcode={this.state.userZipcode}
+                />;
       case 1:
-        return <RepresentativeData handleNext={this.handleNext} handlePrev={this.handlePrev} />;
+        return  <RepresentativeData
+                  handleNext={this.handleNext}
+                  handlePrev={this.handlePrev}
+                  userRepresentatives={this.state.userRepresentatives}
+                  addRepresentative={this.addRecord}
+                  removeRepresentative={this.removeRecord}
+                  zipcode={this.state.userZipcode}
+                />;
       case 2:
-        return <KeywordsList handleNext={this.handleNext} handlePrev={this.handlePrev} />;
+        return  <KeywordsList
+                  handleNext={this.handleNext}
+                  handlePrev={this.handlePrev}
+                  userKeywords={this.state.userKeywords}
+                  addKeyword={this.addRecord}
+                  removeKeyword={this.removeRecord}
+
+                />;
       case 3:
-        return <SignupPage handleNext={this.handleFinished} handlePrev={this.handlePrev} />;
+        return  <SignupPage
+                  handleNext={this.handleFinished}
+                  handlePrev={this.handlePrev}
+                  userRepresentatives={this.state.userRepresentatives}
+                  userKeywords={this.state.userKeywords}
+                />;
       default:
-        return <ZipInput handleNext={this.handleNext} />;
+        return  <ZipInput
+                  handleNext={this.handleNext}
+                />;
     }
   },
   render() {
