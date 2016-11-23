@@ -15,6 +15,7 @@ import ActionSpeakerNotes from 'material-ui/svg-icons/action/speaker-notes';
 import ZipInput from '../../components/zipcode/index.js';
 import RepresentativeData from '../../components/representatives/index.js';
 import KeywordsList from '../../components/keywords/index.js';
+import SignupPage from '../../components/signup/index.js';
 
 const StepperContainer = React.createClass({
   componentWillMount() {
@@ -49,7 +50,9 @@ const StepperContainer = React.createClass({
       case 1:
         return <RepresentativeData handleNext={this.handleNext} handlePrev={this.handlePrev} />;
       case 2:
-        return <KeywordsList handleNext={this.handleFinished} handlePrev={this.handlePrev} handleNext={this.handleFinished} />;
+        return <KeywordsList handleNext={this.handleNext} handlePrev={this.handlePrev} />;
+      case 3:
+        return <SignupPage handleNext={this.handleFinished} handlePrev={this.handlePrev} />;
       default:
         return <ZipInput handleNext={this.handleNext} />;
     }
@@ -72,6 +75,11 @@ const StepperContainer = React.createClass({
           <Step>
             <StepLabel>
               Pick Your Issues
+            </StepLabel>
+          </Step>
+          <Step>
+            <StepLabel>
+              Signup
             </StepLabel>
           </Step>
         </Stepper>

@@ -63717,9 +63717,11 @@
 
 	var _index6 = _interopRequireDefault(_index5);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _index7 = __webpack_require__(656);
 
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	var _index8 = _interopRequireDefault(_index7);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var StepperContainer = _react2.default.createClass({
 	  displayName: 'StepperContainer',
@@ -63757,7 +63759,9 @@
 	      case 1:
 	        return _react2.default.createElement(_index4.default, { handleNext: this.handleNext, handlePrev: this.handlePrev });
 	      case 2:
-	        return _react2.default.createElement(_index6.default, _defineProperty({ handleNext: this.handleFinished, handlePrev: this.handlePrev }, 'handleNext', this.handleFinished));
+	        return _react2.default.createElement(_index6.default, { handleNext: this.handleNext, handlePrev: this.handlePrev });
+	      case 3:
+	        return _react2.default.createElement(_index8.default, { handleNext: this.handleFinished, handlePrev: this.handlePrev });
 	      default:
 	        return _react2.default.createElement(_index2.default, { handleNext: this.handleNext });
 	    }
@@ -63798,6 +63802,15 @@
 	            _Stepper.StepLabel,
 	            null,
 	            'Pick Your Issues'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _Stepper.Step,
+	          null,
+	          _react2.default.createElement(
+	            _Stepper.StepLabel,
+	            null,
+	            'Signup'
 	          )
 	        )
 	      ),
@@ -77947,6 +77960,132 @@
 
 /***/ },
 /* 655 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(320)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "", ""]);
+
+	// exports
+
+
+/***/ },
+/* 656 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _store = __webpack_require__(540);
+
+	var _store2 = _interopRequireDefault(_store);
+
+	var _underscore = __webpack_require__(625);
+
+	var _underscore2 = _interopRequireDefault(_underscore);
+
+	var _List = __webpack_require__(614);
+
+	var _Chip = __webpack_require__(644);
+
+	var _Chip2 = _interopRequireDefault(_Chip);
+
+	var _Avatar = __webpack_require__(609);
+
+	var _Avatar2 = _interopRequireDefault(_Avatar);
+
+	__webpack_require__(657);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var SignupPage = _react2.default.createClass({
+	  displayName: 'SignupPage',
+	  signUp: function signUp() {},
+	  userRepresentatives: function userRepresentatives() {
+	    var representatives = _store2.default.get('representatives');
+	    if (_store2.default.get('representatives') === undefined || Object.keys(_store2.default.get('representatives')).length > 0) {
+	      var representativesArray = _underscore2.default.map(representatives, function (keyword, key) {
+	        return key;
+	      });
+	      return representativesArray;
+	    }
+	  },
+	  userKeywords: function userKeywords() {
+	    var user_keywords = _store2.default.get('user_keywords');
+	    if (_store2.default.get('user_keywords') === undefined || Object.keys(_store2.default.get('user_keywords')).length > 0) {
+	      var keywordArray = _underscore2.default.map(user_keywords, function (keyword, key) {
+	        return key;
+	      });
+	      return keywordArray;
+	    }
+	  },
+	  render: function render() {
+	    return _react2.default.createElement(
+	      'div',
+	      { className: 'signup-container' },
+	      _react2.default.createElement(
+	        _List.List,
+	        null,
+	        this.userRepresentatives().map(function (representative) {
+	          return _react2.default.createElement(_List.ListItem, {
+	            key: representative.id,
+	            leftAvatar: _react2.default.createElement(_Avatar2.default, { src: 'https://theunitedstates.io/images/congress/225x275/' + representative.id + '.jpg' }),
+	            primaryText: representative.first_name + ' ' + representative.last_name,
+	            secondaryText: representative.chamber.toUpperCase() + ' - ' + representative.state
+	          });
+	        })
+	      ),
+	      this.userKeywords().map(function (keyword) {
+	        return _react2.default.createElement(
+	          _Chip2.default,
+	          { key: keyword },
+	          keyword
+	        );
+	      })
+	    );
+	  }
+	});
+
+	exports.default = SignupPage;
+
+/***/ },
+/* 657 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(658);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(321)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/sass-loader/index.js!./style.scss");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 658 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(320)();
