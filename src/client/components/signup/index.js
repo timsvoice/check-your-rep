@@ -5,47 +5,73 @@ import _ from 'underscore';
 import { List, ListItem } from 'material-ui/List';
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
-import TextField from 'material-ui/TextField';
-import { red500, blue500 } from 'material-ui/styles/colors';
+import Dialog from 'material-ui/Dialog';
+
 import StepperNavigaiton from '../buttons/index.js';
+import SignupForm from './signup-form.js'
 import './style.scss';
 
 const SignupPage = React.createClass({
-  signUp() {
-
+  componentWillMount() {
+    this.setState({
+      open: false
+    });
+  },
+  openDialog() {
+    this.setState({
+      open: true
+    })
+  },
+  closeDialog() {
+    this.setState({
+      open: false
+    })
   },
   render() {
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        onTouchTap={this.closeDialog}
+      />,
+      <FlatButton
+          label="Signup"
+          primary={true}
+          onTouchTap={this.props.signUp}
+        />
+      ];
     return (
       <div className="signup-container">
-        <form className="singup-fields">
-          <TextField
-            hintText="email"
-          /><br />
-          <TextField
-            hintText="password"
-          /><br />
-        <RaisedButton
-            label="Signup"
-            labelPosition="before"
-            primary={true}
-            type="submit"
-          />
-        </form>
-        <FlatButton
-          label="Google"
-          labelPosition="before"
-          backgroundColor={ red500 }
-        />
-        <FlatButton
-          label="Twitter"
-          labelPosition="before"
-          backgroundColor={ blue500 }
-        />
+        <List >
+          { this.props.userRepresentatives.map((representative) =>
+            <ListItem
+              key={ representative.id }
+              leftAvatar={<Avatar src={ `https://theunitedstates.io/images/congress/225x275/${representative.id}.jpg` } />}
+              primaryText={ `${representative.first_name} ${representative.last_name}` }
+              secondaryText={ `${representative.chamber.toUpperCase()} - ${representative.state}` }
+              disabled={true}
+            />
+          )}
+        </List>
+        { this.props.userKeywords.map((keyword) =>
+          <Chip key={keyword}>
+            { keyword }
+          </Chip>
+        )}
+
+        <Dialog
+          title="Signup"
+          actions={actions}
+          modal={false}
+          open={this.state.open}
+          onRequestClose={this.handleClose}
+        >
+          <SignupForm />
+        </Dialog>
+
         <StepperNavigaiton
           handlePrev={ this.props.handlePrev }
-          handleNext={ this.props.handleNext }
+          handleNext={ this.openDialog }
           nextLabel="Signup"
         />
       </div>

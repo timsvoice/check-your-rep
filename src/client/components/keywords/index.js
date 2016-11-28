@@ -24,7 +24,7 @@ const KeywordsList = React.createClass({
   handleClick(e) {
     e.preventDefault();
     const keyword = this.refs.keywordValue.state.searchText;
-    this.props.userKeywords.push(keyword);
+    if (keyword.length > 0) this.props.userKeywords.push(keyword);
     this.refs.keywordValue.setState({ searchText: '' });
     this.forceUpdate();
   },
