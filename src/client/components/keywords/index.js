@@ -24,12 +24,16 @@ const KeywordsList = React.createClass({
   handleClick(e) {
     e.preventDefault();
     const keyword = this.refs.keywordValue.state.searchText;
-    if (keyword.length > 0) this.props.userKeywords.push(keyword);
+    this.keywordAdd(keyword);
     this.refs.keywordValue.setState({ searchText: '' });
     this.forceUpdate();
   },
-  handleDelete(keyword) {
-    this.props.userKeywords.splice(keyword);
+  keywordAdd(keyword) {
+    if (keyword.length > 1) this.props.userKeywords.push(keyword);
+    this.forceUpdate();
+  },
+  keywordDelete(keyword) {
+    this.props.userKeywords.splice(keyword, 1);
     this.forceUpdate();
   },
   nextIsDisabled() {
@@ -64,7 +68,7 @@ const KeywordsList = React.createClass({
             this.props.userKeywords.map((keyword) =>
               <Chip
                 key={keyword}
-                onRequestDelete={() => {this.handleDelete(keyword)}}
+                onRequestDelete={() => {this.keywordDelete(keyword)}}
               >{ keyword }</Chip>
             )
           : <h1>Select Your Keywords</h1> }

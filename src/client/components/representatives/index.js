@@ -16,7 +16,7 @@ import _ from 'underscore';
 
 import './style.scss';
 
-const RepresentativeList = React.createClass({
+export const RepresentativeList = React.createClass({
   isToggled(representative) {
     switch( _.indexOf(_.pluck(this.props.userRepresentatives, 'id'), representative.id)) {
       case -1:
@@ -46,9 +46,10 @@ const RepresentativeList = React.createClass({
     return (
       <div>
         { !this.props.data.loading ?
-          <List >
+          <List className='representative-list'>
             { this.props.data.membersLocal.map((representative) =>
               <ListItem
+                className='representative-list-item'
                 key={ representative.id }
                 leftAvatar={<Avatar src={ `https://theunitedstates.io/images/congress/225x275/${representative.id}.jpg` } />}
                 primaryText={ `${representative.first_name} ${representative.last_name}` }
