@@ -1,6 +1,6 @@
 import React from 'react';
 import firebase from 'firebase';
-import database from '../../data.js';
+import { database } from '../../data.js';
 
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -14,28 +14,34 @@ const SignupForm = React.createClass({
   signupUser(e) {
     e.preventDefault();
     const userEmail = this.refs.userEmail.input.value;
-    const userPassword = ths.refs.userPassword.input.value;
+    const userPassword = this.refs.userPassword.input.value;
+    const representatives = this.props.userRepresentatives;
+    const keywords = this.props.userKeywords;
     firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
       .then((user) => {
-        database.ref(`users`).set({
+        database.ref(`users/${user.uid}`).set({
           name: null,
           email: user.email,
+          representatives,
+          keywords,
         })
       })
-      .catch((err) => {
-        throw err;
-      })
+      .catch((err) => { throw err; })
   },
   signupGoogle(e) {
     e.preventDefault();
+    const representatives = this.props.userRepresentatives;
+    const keywords = this.props.userKeywords;
     firebase.auth().signInWithPopup(provider)
       .then((res) => {
         const token = res.credential.accessToken;
         const user = res.user;
-        database.ref(`users/${user.id}`).set({
+        database.ref(`users/${user.uid}`).set({
           name: user.displayName,
           email: user.email,
           token,
+          representatives,
+          keywords,
         })
       })
       .catch((err) => { throw err; })

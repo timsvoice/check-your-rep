@@ -80,24 +80,24 @@
 
 	var _index4 = _interopRequireDefault(_index3);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	// Needed for onTouchTap
 	// http://stackoverflow.com/a/34015469/988941
-	(0, _reactTapEventPlugin2.default)();
+	(0, _reactTapEventPlugin2['default'])();
 
-	var client = new _apolloClient2.default();
+	var client = new _apolloClient2['default']();
 
-	_reactDom2.default.render(_react2.default.createElement(
+	_reactDom2['default'].render(_react2['default'].createElement(
 	  _reactApollo.ApolloProvider,
 	  { client: client },
-	  _react2.default.createElement(
+	  _react2['default'].createElement(
 	    _reactRouter.Router,
 	    { history: _reactRouter.browserHistory },
-	    _react2.default.createElement(
+	    _react2['default'].createElement(
 	      _reactRouter.Route,
-	      { path: '/', component: _index2.default },
-	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _index4.default })
+	      { path: '/', component: _index2['default'] },
+	      _react2['default'].createElement(_reactRouter.IndexRoute, { component: _index4['default'] })
 	    )
 	  )
 	), document.getElementById('App'));
@@ -3251,30 +3251,38 @@
 	// Set.prototype.keys
 	Set.prototype != null && typeof Set.prototype.keys === 'function' && isNative(Set.prototype.keys);
 
+	var setItem;
+	var getItem;
+	var removeItem;
+	var getItemIDs;
+	var addRoot;
+	var removeRoot;
+	var getRootIDs;
+
 	if (canUseCollections) {
 	  var itemMap = new Map();
 	  var rootIDSet = new Set();
 
-	  var setItem = function (id, item) {
+	  setItem = function (id, item) {
 	    itemMap.set(id, item);
 	  };
-	  var getItem = function (id) {
+	  getItem = function (id) {
 	    return itemMap.get(id);
 	  };
-	  var removeItem = function (id) {
+	  removeItem = function (id) {
 	    itemMap['delete'](id);
 	  };
-	  var getItemIDs = function () {
+	  getItemIDs = function () {
 	    return Array.from(itemMap.keys());
 	  };
 
-	  var addRoot = function (id) {
+	  addRoot = function (id) {
 	    rootIDSet.add(id);
 	  };
-	  var removeRoot = function (id) {
+	  removeRoot = function (id) {
 	    rootIDSet['delete'](id);
 	  };
-	  var getRootIDs = function () {
+	  getRootIDs = function () {
 	    return Array.from(rootIDSet.keys());
 	  };
 	} else {
@@ -3290,31 +3298,31 @@
 	    return parseInt(key.substr(1), 10);
 	  };
 
-	  var setItem = function (id, item) {
+	  setItem = function (id, item) {
 	    var key = getKeyFromID(id);
 	    itemByKey[key] = item;
 	  };
-	  var getItem = function (id) {
+	  getItem = function (id) {
 	    var key = getKeyFromID(id);
 	    return itemByKey[key];
 	  };
-	  var removeItem = function (id) {
+	  removeItem = function (id) {
 	    var key = getKeyFromID(id);
 	    delete itemByKey[key];
 	  };
-	  var getItemIDs = function () {
+	  getItemIDs = function () {
 	    return Object.keys(itemByKey).map(getIDFromKey);
 	  };
 
-	  var addRoot = function (id) {
+	  addRoot = function (id) {
 	    var key = getKeyFromID(id);
 	    rootByKey[key] = true;
 	  };
-	  var removeRoot = function (id) {
+	  removeRoot = function (id) {
 	    var key = getKeyFromID(id);
 	    delete rootByKey[key];
 	  };
-	  var getRootIDs = function () {
+	  getRootIDs = function () {
 	    return Object.keys(rootByKey).map(getIDFromKey);
 	  };
 	}
@@ -4095,7 +4103,7 @@
 
 	'use strict';
 
-	module.exports = '15.4.0';
+	module.exports = '15.4.1';
 
 /***/ },
 /* 31 */
@@ -53139,31 +53147,35 @@
 
 	__webpack_require__(518);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var AppContainer = function AppContainer(_ref) {
-	  var children = _ref.children;
+	var AppContainer = function () {
+	  function AppContainer(_ref) {
+	    var children = _ref.children;
 
-	  return _react2.default.createElement(
-	    _MuiThemeProvider2.default,
-	    { muiTheme: (0, _getMuiTheme2.default)(_lightBaseTheme2.default) },
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'app-container' },
-	      _react2.default.createElement(_AppBar2.default, {
-	        title: 'Title',
-	        iconClassNameRight: 'muidocs-icon-navigation-expand-more'
-	      }),
-	      _react2.default.createElement(
+	    return _react2['default'].createElement(
+	      _MuiThemeProvider2['default'],
+	      { muiTheme: (0, _getMuiTheme2['default'])(_lightBaseTheme2['default']) },
+	      _react2['default'].createElement(
 	        'div',
-	        { className: 'app-content' },
-	        children
+	        { className: 'app-container' },
+	        _react2['default'].createElement(_AppBar2['default'], {
+	          title: 'Title',
+	          iconClassNameRight: 'muidocs-icon-navigation-expand-more'
+	        }),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'app-content' },
+	          children
+	        )
 	      )
-	    )
-	  );
-	};
+	    );
+	  }
 
-	exports.default = AppContainer;
+	  return AppContainer;
+	}();
+
+	exports['default'] = AppContainer;
 
 /***/ },
 /* 323 */
@@ -63683,6 +63695,8 @@
 
 	var _underscore2 = _interopRequireDefault(_underscore);
 
+	var _reactRouter = __webpack_require__(178);
+
 	var _index = __webpack_require__(532);
 
 	var _index2 = _interopRequireDefault(_index);
@@ -63699,162 +63713,199 @@
 
 	var _index8 = _interopRequireDefault(_index7);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var StepperContainer = _react2.default.createClass({
+	var StepperContainer = _react2['default'].createClass({
 	  displayName: 'StepperContainer',
-	  componentWillMount: function componentWillMount() {
-	    this.setState({
-	      finished: false,
-	      stepIndex: 0,
-	      userZipcode: null,
-	      userRepresentatives: [],
-	      userKeywords: []
-	    });
-	  },
-	  handleNext: function handleNext() {
-	    var stepIndex = this.state.stepIndex;
-
-	    this.setState({
-	      stepIndex: stepIndex + 1,
-	      finished: stepIndex >= 2
-	    });
-	  },
-	  handlePrev: function handlePrev() {
-	    var stepIndex = this.state.stepIndex;
-
-	    if (stepIndex > 0) {
-	      this.setState({ stepIndex: stepIndex - 1 });
+	  componentWillMount: function () {
+	    function componentWillMount() {
+	      this.setState({
+	        finished: false,
+	        stepIndex: 0,
+	        userZipcode: null,
+	        userRepresentatives: [],
+	        userKeywords: []
+	      });
 	    }
-	  },
-	  handleFinished: function handleFinished() {
-	    this.setState({
-	      finished: true
-	    });
-	  },
-	  updateZipcode: function updateZipcode(zipcode) {
-	    this.setState({
-	      userZipcode: zipcode
-	    });
-	  },
-	  addRecord: function addRecord(record, type) {
-	    switch (type) {
-	      case 'userRepresentatives':
-	        this.state.userRepresentatives.push(record);
-	        break;
-	      case 'userKeywords':
-	        this.state.userKeywords.push(record);
-	        break;
-	    }
-	  },
-	  removeRecord: function removeRecord(record, type) {
-	    switch (type) {
-	      case 'userRepresentatives':
-	        var recordId = _underscore2.default.indexOf(_underscore2.default.pluck(this.state.userRepresentatives, 'id'), record.id);
-	        this.state.userRepresentatives.splice(recordId, 1);
-	        break;
-	      case 'userKeywords':
-	        this.state.userKeywords.splice(record, 1);
-	        break;
-	    }
-	  },
-	  getStepContent: function getStepContent(stepIndex) {
-	    switch (stepIndex) {
-	      case 0:
-	        return _react2.default.createElement(_index2.default, {
-	          handleNext: this.handleNext,
-	          updateZipcode: this.updateZipcode,
-	          zipcode: this.state.userZipcode
-	        });
-	      case 1:
-	        return _react2.default.createElement(_index4.default, {
-	          handleNext: this.handleNext,
-	          handlePrev: this.handlePrev,
-	          userRepresentatives: this.state.userRepresentatives,
-	          addRepresentative: this.addRecord,
-	          removeRepresentative: this.removeRecord,
-	          zipcode: this.state.userZipcode
-	        });
-	      case 2:
-	        return _react2.default.createElement(_index6.default, {
-	          handleNext: this.handleNext,
-	          handlePrev: this.handlePrev,
-	          userKeywords: this.state.userKeywords,
-	          addKeyword: this.addRecord,
-	          removeKeyword: this.removeRecord
 
-	        });
-	      case 3:
-	        return _react2.default.createElement(_index8.default, {
-	          handleNext: this.handleFinished,
-	          handlePrev: this.handlePrev,
-	          userRepresentatives: this.state.userRepresentatives,
-	          userKeywords: this.state.userKeywords
-	        });
-	      default:
-	        return _react2.default.createElement(_index2.default, {
-	          handleNext: this.handleNext
-	        });
-	    }
-	  },
-	  render: function render() {
-	    var _state = this.state,
-	        finished = _state.finished,
-	        stepIndex = _state.stepIndex;
+	    return componentWillMount;
+	  }(),
+	  handleNext: function () {
+	    function handleNext() {
+	      var stepIndex = this.state.stepIndex;
 
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'stepper-container' },
-	      _react2.default.createElement(
-	        _Stepper.Stepper,
-	        { activeStep: stepIndex },
-	        _react2.default.createElement(
-	          _Stepper.Step,
-	          null,
-	          _react2.default.createElement(
-	            _Stepper.StepLabel,
-	            null,
-	            'Enter Zipcode'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _Stepper.Step,
-	          null,
-	          _react2.default.createElement(
-	            _Stepper.StepLabel,
-	            null,
-	            'Find Your Reps'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _Stepper.Step,
-	          null,
-	          _react2.default.createElement(
-	            _Stepper.StepLabel,
-	            null,
-	            'Pick Your Issues'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          _Stepper.Step,
-	          null,
-	          _react2.default.createElement(
-	            _Stepper.StepLabel,
-	            null,
-	            'Signup'
-	          )
-	        )
-	      ),
-	      _react2.default.createElement(
+	      this.setState({
+	        stepIndex: stepIndex + 1,
+	        finished: stepIndex >= 2
+	      });
+	    }
+
+	    return handleNext;
+	  }(),
+	  handlePrev: function () {
+	    function handlePrev() {
+	      var stepIndex = this.state.stepIndex;
+
+	      if (stepIndex > 0) {
+	        this.setState({ stepIndex: stepIndex - 1 });
+	      }
+	    }
+
+	    return handlePrev;
+	  }(),
+	  handleFinished: function () {
+	    function handleFinished() {
+	      this.setState({
+	        finished: true
+	      });
+	      _reactRouter.browserHistory.push('/me');
+	    }
+
+	    return handleFinished;
+	  }(),
+	  updateZipcode: function () {
+	    function updateZipcode(zipcode) {
+	      this.setState({
+	        userZipcode: zipcode
+	      });
+	    }
+
+	    return updateZipcode;
+	  }(),
+	  addRecord: function () {
+	    function addRecord(record, type) {
+	      switch (type) {
+	        case 'userRepresentatives':
+	          this.state.userRepresentatives.push(record);
+	          break;
+	        case 'userKeywords':
+	          this.state.userKeywords.push(record);
+	          break;
+	      }
+	    }
+
+	    return addRecord;
+	  }(),
+	  removeRecord: function () {
+	    function removeRecord(record, type) {
+	      switch (type) {
+	        case 'userRepresentatives':
+	          var recordId = _underscore2['default'].indexOf(_underscore2['default'].pluck(this.state.userRepresentatives, 'id'), record.id);
+	          this.state.userRepresentatives.splice(recordId, 1);
+	          break;
+	        case 'userKeywords':
+	          this.state.userKeywords.splice(record, 1);
+	          break;
+	      }
+	    }
+
+	    return removeRecord;
+	  }(),
+	  getStepContent: function () {
+	    function getStepContent(stepIndex) {
+	      switch (stepIndex) {
+	        case 0:
+	          return _react2['default'].createElement(_index2['default'], {
+	            handleNext: this.handleNext,
+	            updateZipcode: this.updateZipcode,
+	            zipcode: this.state.userZipcode
+	          });
+	        case 1:
+	          return _react2['default'].createElement(_index4['default'], {
+	            handleNext: this.handleNext,
+	            handlePrev: this.handlePrev,
+	            userRepresentatives: this.state.userRepresentatives,
+	            addRepresentative: this.addRecord,
+	            removeRepresentative: this.removeRecord,
+	            zipcode: this.state.userZipcode
+	          });
+	        case 2:
+	          return _react2['default'].createElement(_index6['default'], {
+	            handleNext: this.handleNext,
+	            handlePrev: this.handlePrev,
+	            userKeywords: this.state.userKeywords,
+	            addKeyword: this.addRecord,
+	            removeKeyword: this.removeRecord
+
+	          });
+	        case 3:
+	          return _react2['default'].createElement(_index8['default'], {
+	            handleNext: this.handleFinished,
+	            handlePrev: this.handlePrev,
+	            userRepresentatives: this.state.userRepresentatives,
+	            userKeywords: this.state.userKeywords
+	          });
+	        default:
+	          return _react2['default'].createElement(_index2['default'], {
+	            handleNext: this.handleNext
+	          });
+	      }
+	    }
+
+	    return getStepContent;
+	  }(),
+	  render: function () {
+	    function render() {
+	      var _state = this.state,
+	          finished = _state.finished,
+	          stepIndex = _state.stepIndex;
+
+	      return _react2['default'].createElement(
 	        'div',
-	        { className: 'stepper-content' },
-	        this.getStepContent(stepIndex)
-	      )
-	    );
-	  }
+	        { className: 'stepper-container' },
+	        _react2['default'].createElement(
+	          _Stepper.Stepper,
+	          { activeStep: stepIndex },
+	          _react2['default'].createElement(
+	            _Stepper.Step,
+	            null,
+	            _react2['default'].createElement(
+	              _Stepper.StepLabel,
+	              null,
+	              'Enter Zipcode'
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _Stepper.Step,
+	            null,
+	            _react2['default'].createElement(
+	              _Stepper.StepLabel,
+	              null,
+	              'Find Your Reps'
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _Stepper.Step,
+	            null,
+	            _react2['default'].createElement(
+	              _Stepper.StepLabel,
+	              null,
+	              'Pick Your Issues'
+	            )
+	          ),
+	          _react2['default'].createElement(
+	            _Stepper.Step,
+	            null,
+	            _react2['default'].createElement(
+	              _Stepper.StepLabel,
+	              null,
+	              'Signup'
+	            )
+	          )
+	        ),
+	        _react2['default'].createElement(
+	          'div',
+	          { className: 'stepper-content' },
+	          this.getStepContent(stepIndex)
+	        )
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	exports.default = StepperContainer;
+	exports['default'] = StepperContainer;
 
 /***/ },
 /* 521 */
@@ -66878,49 +66929,57 @@
 
 	__webpack_require__(603);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var ZipInput = _react2.default.createClass({
+	var ZipInput = _react2['default'].createClass({
 	  displayName: 'ZipInput',
-	  handleSubmit: function handleSubmit(e) {
-	    e.preventDefault();
-	    console.log(this);
-	    var zipQuery = e.target.zipcode.value;
-	    if (zipQuery.length < 5) {
-	      alert('Please enter valid 5 digit zipcode');
-	    } else {
-	      this.props.updateZipcode(zipQuery);
-	      this.props.handleNext();
+	  handleSubmit: function () {
+	    function handleSubmit(e) {
+	      e.preventDefault();
+	      console.log(this);
+	      var zipQuery = e.target.zipcode.value;
+	      if (zipQuery.length < 5) {
+	        alert('Please enter valid 5 digit zipcode');
+	      } else {
+	        this.props.updateZipcode(zipQuery);
+	        this.props.handleNext();
+	      }
 	    }
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'zip-input-container' },
-	      _react2.default.createElement(
-	        'form',
-	        { onSubmit: this.handleSubmit },
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Zip Code'
-	        ),
-	        _react2.default.createElement(_TextField2.default, {
-	          id: 'zipcode',
-	          hintText: 'Your Zip Code',
-	          defaultValue: this.props.zipcode
-	        }),
-	        _react2.default.createElement(_index2.default, {
-	          handlePrev: this.handlePrev,
-	          nextType: 'submit',
-	          prevIsDisabled: true
-	        })
-	      )
-	    );
-	  }
+
+	    return handleSubmit;
+	  }(),
+	  render: function () {
+	    function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'zip-input-container' },
+	        _react2['default'].createElement(
+	          'form',
+	          { onSubmit: this.handleSubmit },
+	          _react2['default'].createElement(
+	            'h2',
+	            null,
+	            'Zip Code'
+	          ),
+	          _react2['default'].createElement(_TextField2['default'], {
+	            id: 'zipcode',
+	            hintText: 'Your Zip Code',
+	            defaultValue: this.props.zipcode
+	          }),
+	          _react2['default'].createElement(_index2['default'], {
+	            handlePrev: this.handlePrev,
+	            nextType: 'submit',
+	            prevIsDisabled: true
+	          })
+	        )
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	exports.default = ZipInput;
+	exports['default'] = ZipInput;
 
 /***/ },
 /* 533 */
@@ -70290,33 +70349,37 @@
 
 	var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var StepperNavigaiton = _react2.default.createClass({
+	var StepperNavigaiton = _react2['default'].createClass({
 	  displayName: 'StepperNavigaiton',
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(_FlatButton2.default, {
-	        label: 'Back',
-	        className: 'back-button',
-	        onClick: this.props.handlePrev,
-	        disabled: this.props.prevIsDisabled || false
-	      }),
-	      _react2.default.createElement(_RaisedButton2.default, {
-	        label: this.props.nextLabel || "Next",
-	        primary: true,
-	        className: 'next-button',
-	        onClick: this.props.handleNext,
-	        disabled: this.props.nextIsDisabled || false,
-	        type: this.props.nextType || 'button'
-	      })
-	    );
-	  }
+	  render: function () {
+	    function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        null,
+	        _react2['default'].createElement(_FlatButton2['default'], {
+	          label: 'Back',
+	          className: 'back-button',
+	          onClick: this.props.handlePrev,
+	          disabled: this.props.prevIsDisabled || false
+	        }),
+	        _react2['default'].createElement(_RaisedButton2['default'], {
+	          label: this.props.nextLabel || "Next",
+	          primary: true,
+	          className: 'next-button',
+	          onClick: this.props.handleNext,
+	          disabled: this.props.nextIsDisabled || false,
+	          type: this.props.nextType || 'button'
+	        })
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	exports.default = StepperNavigaiton;
+	exports['default'] = StepperNavigaiton;
 
 /***/ },
 /* 603 */
@@ -70367,6 +70430,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.RepresentativeList = undefined;
 
 	var _templateObject = _taggedTemplateLiteral(['\n  query RootQuery($zip_code: String!) {\n    membersLocal(zip_code: $zip_code) {\n      id\n      first_name\n      last_name\n      state\n      chamber\n    }\n  }'], ['\n  query RootQuery($zip_code: String!) {\n    membersLocal(zip_code: $zip_code) {\n      id\n      first_name\n      last_name\n      state\n      chamber\n    }\n  }']);
 
@@ -70414,80 +70478,105 @@
 
 	__webpack_require__(622);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _taggedTemplateLiteral(strings, raw) { return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
-	var RepresentativeList = _react2.default.createClass({
+	var RepresentativeList = exports.RepresentativeList = _react2['default'].createClass({
 	  displayName: 'RepresentativeList',
-	  isToggled: function isToggled(representative) {
-	    switch (_underscore2.default.indexOf(_underscore2.default.pluck(this.props.userRepresentatives, 'id'), representative.id)) {
-	      case -1:
-	        return false;
-	        break;
-	      default:
-	        return true;
-	        break;
+	  isToggled: function () {
+	    function isToggled(representative) {
+	      switch (_underscore2['default'].indexOf(_underscore2['default'].pluck(this.props.userRepresentatives, 'id'), representative.id)) {
+	        case -1:
+	          return false;
+	          break;
+	        default:
+	          return true;
+	          break;
+	      }
 	    }
-	  },
-	  nextIsDisabled: function nextIsDisabled() {
-	    if (this.props.userRepresentatives.length < 1) return true;
-	    return false;
-	  },
-	  toggleRepresentative: function toggleRepresentative(representative) {
-	    switch (_underscore2.default.indexOf(_underscore2.default.pluck(this.props.userRepresentatives, 'id'), representative.id)) {
-	      case -1:
-	        this.props.addRepresentative(representative, 'userRepresentatives');
-	        break;
-	      default:
-	        this.props.removeRepresentative(representative, 'userRepresentatives');
-	        break;
-	    }
-	    this.forceUpdate();
-	  },
-	  render: function render() {
-	    var _this = this;
 
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      !this.props.data.loading ? _react2.default.createElement(
-	        _List.List,
+	    return isToggled;
+	  }(),
+	  nextIsDisabled: function () {
+	    function nextIsDisabled() {
+	      if (this.props.userRepresentatives.length < 1) return true;
+	      return false;
+	    }
+
+	    return nextIsDisabled;
+	  }(),
+	  toggleRepresentative: function () {
+	    function toggleRepresentative(representative) {
+	      switch (_underscore2['default'].indexOf(_underscore2['default'].pluck(this.props.userRepresentatives, 'id'), representative.id)) {
+	        case -1:
+	          this.props.addRepresentative(representative, 'userRepresentatives');
+	          break;
+	        default:
+	          this.props.removeRepresentative(representative, 'userRepresentatives');
+	          break;
+	      }
+	      this.forceUpdate();
+	    }
+
+	    return toggleRepresentative;
+	  }(),
+	  render: function () {
+	    function render() {
+	      var _this = this;
+
+	      return _react2['default'].createElement(
+	        'div',
 	        null,
-	        this.props.data.membersLocal.map(function (representative) {
-	          return _react2.default.createElement(_List.ListItem, {
-	            key: representative.id,
-	            leftAvatar: _react2.default.createElement(_Avatar2.default, { src: 'https://theunitedstates.io/images/congress/225x275/' + representative.id + '.jpg' }),
-	            primaryText: representative.first_name + ' ' + representative.last_name,
-	            secondaryText: representative.chamber.toUpperCase() + ' - ' + representative.state,
-	            rightToggle: _react2.default.createElement(_Toggle2.default, {
-	              onToggle: function onToggle() {
-	                _this.toggleRepresentative(representative);
-	              },
-	              defaultToggled: _this.isToggled(representative)
-	            })
-	          });
+	        !this.props.data.loading ? _react2['default'].createElement(
+	          _List.List,
+	          { className: 'representative-list' },
+	          this.props.data.membersLocal.map(function (representative) {
+	            return _react2['default'].createElement(_List.ListItem, {
+	              className: 'representative-list-item',
+	              key: representative.id,
+	              leftAvatar: _react2['default'].createElement(_Avatar2['default'], { src: 'https://theunitedstates.io/images/congress/225x275/' + representative.id + '.jpg' }),
+	              primaryText: representative.first_name + ' ' + representative.last_name,
+	              secondaryText: representative.chamber.toUpperCase() + ' - ' + representative.state,
+	              rightToggle: _react2['default'].createElement(_Toggle2['default'], {
+	                onToggle: function () {
+	                  function onToggle() {
+	                    _this.toggleRepresentative(representative);
+	                  }
+
+	                  return onToggle;
+	                }(),
+	                defaultToggled: _this.isToggled(representative)
+	              })
+	            });
+	          })
+	        ) : _react2['default'].createElement(_CircularProgress2['default'], null),
+	        _react2['default'].createElement(_index2['default'], {
+	          handlePrev: this.props.handlePrev,
+	          handleNext: this.props.handleNext,
+	          nextType: 'submit',
+	          nextIsDisabled: this.nextIsDisabled()
 	        })
-	      ) : _react2.default.createElement(_CircularProgress2.default, null),
-	      _react2.default.createElement(_index2.default, {
-	        handlePrev: this.props.handlePrev,
-	        handleNext: this.props.handleNext,
-	        nextType: 'submit',
-	        nextIsDisabled: this.nextIsDisabled()
-	      })
-	    );
-	  }
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	var RepresentativeData = (0, _graphqlTag2.default)(_templateObject);
+	var RepresentativeData = (0, _graphqlTag2['default'])(_templateObject);
 
 	var RepresentativesData = (0, _reactApollo.graphql)(RepresentativeData, {
-	  options: function options(ownProps) {
-	    return { variables: { zip_code: ownProps.zipcode } };
-	  }
+	  options: function () {
+	    function options(ownProps) {
+	      return { variables: { zip_code: ownProps.zipcode } };
+	    }
+
+	    return options;
+	  }()
 	})(RepresentativeList);
 
-	exports.default = RepresentativesData;
+	exports['default'] = RepresentativesData;
 
 /***/ },
 /* 606 */
@@ -73131,85 +73220,117 @@
 
 	__webpack_require__(651);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-	var KeywordsList = _react2.default.createClass({
+	var KeywordsList = _react2['default'].createClass({
 	  displayName: 'KeywordsList',
-	  componentWillMount: function componentWillMount() {
-	    this.state = { keywords: [] };
-	    _data.database.ref('/keywords').once('value', function (keywords) {
-	      this.setState({
-	        keywords: keywords.val()
-	      });
-	    }.bind(this));
-	  },
-	  handleClick: function handleClick(e) {
-	    e.preventDefault();
-	    var keyword = this.refs.keywordValue.state.searchText;
-	    if (keyword.length > 0) this.props.userKeywords.push(keyword);
-	    this.refs.keywordValue.setState({ searchText: '' });
-	    this.forceUpdate();
-	  },
-	  handleDelete: function handleDelete(keyword) {
-	    this.props.userKeywords.splice(keyword);
-	    this.forceUpdate();
-	  },
-	  nextIsDisabled: function nextIsDisabled() {
-	    if (this.props.userKeywords.length < 1) return true;
-	    return false;
-	  },
-	  render: function render() {
-	    var _React$createElement,
-	        _this = this;
+	  componentWillMount: function () {
+	    function componentWillMount() {
+	      this.state = { keywords: [] };
+	      _data.database.ref('/keywords').once('value', function (keywords) {
+	        this.setState({
+	          keywords: keywords.val()
+	        });
+	      }.bind(this));
+	    }
 
-	    return _react2.default.createElement(
-	      'div',
-	      null,
-	      this.state.keywords ? _react2.default.createElement(
+	    return componentWillMount;
+	  }(),
+	  handleClick: function () {
+	    function handleClick(e) {
+	      e.preventDefault();
+	      var keyword = this.refs.keywordValue.state.searchText;
+	      this.keywordAdd(keyword);
+	      this.refs.keywordValue.setState({ searchText: '' });
+	      this.forceUpdate();
+	    }
+
+	    return handleClick;
+	  }(),
+	  keywordAdd: function () {
+	    function keywordAdd(keyword) {
+	      if (keyword.length > 1) this.props.userKeywords.push(keyword);
+	      this.forceUpdate();
+	    }
+
+	    return keywordAdd;
+	  }(),
+	  keywordDelete: function () {
+	    function keywordDelete(keyword) {
+	      this.props.userKeywords.splice(keyword, 1);
+	      this.forceUpdate();
+	    }
+
+	    return keywordDelete;
+	  }(),
+	  nextIsDisabled: function () {
+	    function nextIsDisabled() {
+	      if (this.props.userKeywords.length < 1) return true;
+	      return false;
+	    }
+
+	    return nextIsDisabled;
+	  }(),
+	  render: function () {
+	    function render() {
+	      var _React$createElement,
+	          _this = this;
+
+	      return _react2['default'].createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_AutoComplete2.default, (_React$createElement = {
-	          hintText: 'Find an Issue (e.g. type academic)',
-	          dataSource: this.state.keywords,
-	          filter: _AutoComplete2.default.caseInsensitiveFilter
-	        }, _defineProperty(_React$createElement, 'filter', _AutoComplete2.default.fuzzyFilter), _defineProperty(_React$createElement, 'maxSearchResults', 5), _defineProperty(_React$createElement, 'ref', 'keywordValue'), _React$createElement)),
-	        _react2.default.createElement('div', null),
-	        _react2.default.createElement(_RaisedButton2.default, {
-	          label: 'Add',
-	          primary: true,
-	          className: 'primary-button',
-	          onClick: this.handleClick
+	        this.state.keywords ? _react2['default'].createElement(
+	          'div',
+	          null,
+	          _react2['default'].createElement(_AutoComplete2['default'], (_React$createElement = {
+	            hintText: 'Find an Issue (e.g. type academic)',
+	            dataSource: this.state.keywords,
+	            filter: _AutoComplete2['default'].caseInsensitiveFilter
+	          }, _defineProperty(_React$createElement, 'filter', _AutoComplete2['default'].fuzzyFilter), _defineProperty(_React$createElement, 'maxSearchResults', 5), _defineProperty(_React$createElement, 'ref', 'keywordValue'), _React$createElement)),
+	          _react2['default'].createElement('div', null),
+	          _react2['default'].createElement(_RaisedButton2['default'], {
+	            label: 'Add',
+	            primary: true,
+	            className: 'primary-button',
+	            onClick: this.handleClick
+	          })
+	        ) : _react2['default'].createElement(_CircularProgress2['default'], null),
+	        this.props.userKeywords.length > 0 ? this.props.userKeywords.map(function (keyword) {
+	          return _react2['default'].createElement(
+	            _Chip2['default'],
+	            {
+	              key: keyword,
+	              onRequestDelete: function () {
+	                function onRequestDelete() {
+	                  _this.keywordDelete(keyword);
+	                }
+
+	                return onRequestDelete;
+	              }()
+	            },
+	            keyword
+	          );
+	        }) : _react2['default'].createElement(
+	          'h1',
+	          null,
+	          'Select Your Keywords'
+	        ),
+	        _react2['default'].createElement(_index2['default'], {
+	          handlePrev: this.props.handlePrev,
+	          handleNext: this.props.handleNext,
+	          nextType: 'submit',
+	          nextIsDisabled: this.nextIsDisabled()
 	        })
-	      ) : _react2.default.createElement(_CircularProgress2.default, null),
-	      this.props.userKeywords.length > 0 ? this.props.userKeywords.map(function (keyword) {
-	        return _react2.default.createElement(
-	          _Chip2.default,
-	          {
-	            key: keyword,
-	            onRequestDelete: function onRequestDelete() {
-	              _this.handleDelete(keyword);
-	            }
-	          },
-	          keyword
-	        );
-	      }) : _react2.default.createElement(
-	        'h1',
-	        null,
-	        'Select Your Keywords'
-	      ),
-	      _react2.default.createElement(_index2.default, {
-	        handlePrev: this.props.handlePrev,
-	        handleNext: this.props.handleNext,
-	        nextType: 'submit',
-	        nextIsDisabled: this.nextIsDisabled()
-	      })
-	    );
-	  }
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	exports.default = KeywordsList;
+	exports['default'] = KeywordsList;
 
 /***/ },
 /* 625 */
@@ -77139,7 +77260,7 @@
 
 	var firebase = _interopRequireWildcard(_firebase);
 
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
 
 	// Firebase config
 	var config = {
@@ -77886,78 +78007,32 @@
 
 	__webpack_require__(659);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var SignupPage = _react2.default.createClass({
+	var SignupPage = _react2['default'].createClass({
 	  displayName: 'SignupPage',
-	  componentWillMount: function componentWillMount() {
-	    this.setState({
-	      open: false
-	    });
-	  },
-	  openDialog: function openDialog() {
-	    this.setState({
-	      open: true
-	    });
-	  },
-	  closeDialog: function closeDialog() {
-	    this.setState({
-	      open: false
-	    });
-	  },
-	  render: function render() {
-	    var actions = [_react2.default.createElement(_FlatButton2.default, {
-	      label: 'Cancel',
-	      onTouchTap: this.closeDialog
-	    }), _react2.default.createElement(_FlatButton2.default, {
-	      label: 'Signup',
-	      primary: true,
-	      onTouchTap: this.props.signUp
-	    })];
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'signup-container' },
-	      _react2.default.createElement(
-	        _List.List,
-	        null,
-	        this.props.userRepresentatives.map(function (representative) {
-	          return _react2.default.createElement(_List.ListItem, {
-	            key: representative.id,
-	            leftAvatar: _react2.default.createElement(_Avatar2.default, { src: 'https://theunitedstates.io/images/congress/225x275/' + representative.id + '.jpg' }),
-	            primaryText: representative.first_name + ' ' + representative.last_name,
-	            secondaryText: representative.chamber.toUpperCase() + ' - ' + representative.state,
-	            disabled: true
-	          });
+	  render: function () {
+	    function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'signup-container' },
+	        _react2['default'].createElement(_signupForm2['default'], {
+	          userRepresentatives: this.props.userRepresentatives,
+	          userKeywords: this.props.userKeywords
+	        }),
+	        _react2['default'].createElement(_index2['default'], {
+	          handlePrev: this.props.handlePrev,
+	          handleNext: this.props.handleNext,
+	          nextLabel: 'Signup'
 	        })
-	      ),
-	      this.props.userKeywords.map(function (keyword) {
-	        return _react2.default.createElement(
-	          _Chip2.default,
-	          { key: keyword },
-	          keyword
-	        );
-	      }),
-	      _react2.default.createElement(
-	        _Dialog2.default,
-	        {
-	          title: 'Signup',
-	          actions: actions,
-	          modal: false,
-	          open: this.state.open,
-	          onRequestClose: this.handleClose
-	        },
-	        _react2.default.createElement(_signupForm2.default, null)
-	      ),
-	      _react2.default.createElement(_index2.default, {
-	        handlePrev: this.props.handlePrev,
-	        handleNext: this.openDialog,
-	        nextLabel: 'Signup'
-	      })
-	    );
-	  }
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	exports.default = SignupPage;
+	exports['default'] = SignupPage;
 
 /***/ },
 /* 654 */
@@ -78863,8 +78938,6 @@
 
 	var _data = __webpack_require__(644);
 
-	var _data2 = _interopRequireDefault(_data);
-
 	var _TextField = __webpack_require__(533);
 
 	var _TextField2 = _interopRequireDefault(_TextField);
@@ -78883,78 +78956,98 @@
 
 	var _colors = __webpack_require__(423);
 
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-	var provider = new _firebase2.default.auth.GoogleAuthProvider();
+	var provider = new _firebase2['default'].auth.GoogleAuthProvider();
 
-	var SignupForm = _react2.default.createClass({
+	var SignupForm = _react2['default'].createClass({
 	  displayName: 'SignupForm',
-	  signupUser: function signupUser(e) {
-	    e.preventDefault();
-	    var userEmail = this.refs.userEmail.input.value;
-	    var userPassword = ths.refs.userPassword.input.value;
-	    _firebase2.default.auth().createUserWithEmailAndPassword(userEmail, userPassword).then(function (user) {
-	      _data2.default.ref('users').set({
-	        name: null,
-	        email: user.email
+	  signupUser: function () {
+	    function signupUser(e) {
+	      e.preventDefault();
+	      var userEmail = this.refs.userEmail.input.value;
+	      var userPassword = this.refs.userPassword.input.value;
+	      var representatives = this.props.userRepresentatives;
+	      var keywords = this.props.userKeywords;
+	      _firebase2['default'].auth().createUserWithEmailAndPassword(userEmail, userPassword).then(function (user) {
+	        _data.database.ref('users/' + user.uid).set({
+	          name: null,
+	          email: user.email,
+	          representatives: representatives,
+	          keywords: keywords
+	        });
+	      })['catch'](function (err) {
+	        throw err;
 	      });
-	    }).catch(function (err) {
-	      throw err;
-	    });
-	  },
-	  signupGoogle: function signupGoogle(e) {
-	    e.preventDefault();
-	    _firebase2.default.auth().signInWithPopup(provider).then(function (res) {
-	      var token = res.credential.accessToken;
-	      var user = res.user;
-	      _data2.default.ref('users/' + user.id).set({
-	        name: user.displayName,
-	        email: user.email,
-	        token: token
+	    }
+
+	    return signupUser;
+	  }(),
+	  signupGoogle: function () {
+	    function signupGoogle(e) {
+	      e.preventDefault();
+	      var representatives = this.props.userRepresentatives;
+	      var keywords = this.props.userKeywords;
+	      _firebase2['default'].auth().signInWithPopup(provider).then(function (res) {
+	        var token = res.credential.accessToken;
+	        var user = res.user;
+	        _data.database.ref('users/' + user.uid).set({
+	          name: user.displayName,
+	          email: user.email,
+	          token: token,
+	          representatives: representatives,
+	          keywords: keywords
+	        });
+	      })['catch'](function (err) {
+	        throw err;
 	      });
-	    }).catch(function (err) {
-	      throw err;
-	    });
-	  },
-	  render: function render() {
-	    return _react2.default.createElement(
-	      'div',
-	      { className: 'signup-container' },
-	      _react2.default.createElement(
-	        'form',
-	        { className: 'singup-fields', onSubmit: this.signupUser },
-	        _react2.default.createElement(_TextField2.default, {
-	          hintText: 'email',
-	          underlineShow: false,
-	          ref: 'userEmail'
-	        }),
-	        _react2.default.createElement(_Divider2.default, null),
-	        _react2.default.createElement(_TextField2.default, {
-	          hintText: 'password',
-	          underlineShow: false,
-	          type: 'password',
-	          ref: 'userPassword'
-	        }),
-	        _react2.default.createElement(_Divider2.default, null),
-	        _react2.default.createElement(_FlatButton2.default, {
-	          label: 'Google',
-	          labelPosition: 'before',
-	          backgroundColor: _colors.red500,
-	          onClick: this.signupGoogle
-	        }),
-	        _react2.default.createElement(_Divider2.default, null),
-	        _react2.default.createElement(_RaisedButton2.default, {
-	          label: 'Signup',
-	          labelPosition: 'before',
-	          primary: true,
-	          type: 'submit'
-	        })
-	      )
-	    );
-	  }
+	    }
+
+	    return signupGoogle;
+	  }(),
+	  render: function () {
+	    function render() {
+	      return _react2['default'].createElement(
+	        'div',
+	        { className: 'signup-container' },
+	        _react2['default'].createElement(
+	          'form',
+	          { className: 'singup-fields', onSubmit: this.signupUser },
+	          _react2['default'].createElement(_TextField2['default'], {
+	            hintText: 'email',
+	            underlineShow: false,
+	            ref: 'userEmail'
+	          }),
+	          _react2['default'].createElement(_Divider2['default'], null),
+	          _react2['default'].createElement(_TextField2['default'], {
+	            hintText: 'password',
+	            underlineShow: false,
+	            type: 'password',
+	            ref: 'userPassword'
+	          }),
+	          _react2['default'].createElement(_Divider2['default'], null),
+	          _react2['default'].createElement(_FlatButton2['default'], {
+	            label: 'Google',
+	            labelPosition: 'before',
+	            backgroundColor: _colors.red500,
+	            onClick: this.signupGoogle
+	          }),
+	          _react2['default'].createElement(_Divider2['default'], null),
+	          _react2['default'].createElement(_RaisedButton2['default'], {
+	            label: 'Signup',
+	            labelPosition: 'before',
+	            primary: true,
+	            type: 'submit'
+	          })
+	        )
+	      );
+	    }
+
+	    return render;
+	  }()
 	});
 
-	exports.default = SignupForm;
+	exports['default'] = SignupForm;
 
 /***/ },
 /* 659 */

@@ -5,6 +5,7 @@ import {
   StepLabel,
 } from 'material-ui/Stepper';
 import _ from 'underscore';
+import { browserHistory } from 'react-router';
 
 import ZipInput from '../../components/zipcode/index.js';
 import RepresentativeData from '../../components/representatives/index.js';
@@ -38,6 +39,7 @@ const StepperContainer = React.createClass({
     this.setState({
       finished: true
     });
+    browserHistory.push('/me');
   },
   updateZipcode(zipcode) {
     this.setState({
