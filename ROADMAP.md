@@ -1,3 +1,14 @@
+#161204
+The testing of the user dashboard is basically completed. Todat we should complete the routing system for the dashboard and look at authentication. Once that is complete I think we can move onto the final styling of the app.
+
+##GOAL
+Finalize the user dashboard (including base styling) and complete base styling for the rest of the app.
+
+##STRETCH GOAL
+Begin work on the emailing mechanism (server)
+
+----
+
 #161201
 Started work on the user Dashboard which should be a simple representation of the user's selected reps and keywords. This is just a basic management tool for the user.
 
