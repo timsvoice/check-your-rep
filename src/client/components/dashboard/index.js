@@ -81,7 +81,7 @@ const Preferences = (props) => {
 
 const Dashboard = React.createClass({
   componentWillMount() {
-    const user = auth;
+    const user = this.props.user;
     if (!user || user === null) throw 'Error! No User';
     database.ref(`/users/${user.uid}`).once('value', function(user) {
       this.setState({

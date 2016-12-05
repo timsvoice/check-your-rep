@@ -17,6 +17,7 @@ const SignupForm = React.createClass({
     const userPassword = this.refs.userPassword.input.value;
     const representatives = this.props.userRepresentatives;
     const keywords = this.props.userKeywords;
+    const preferences = { frequency: 'weekly' }
     firebase.auth().createUserWithEmailAndPassword(userEmail, userPassword)
       .then((user) => {
         database.ref(`users/${user.uid}`).set({
@@ -24,6 +25,7 @@ const SignupForm = React.createClass({
           email: user.email,
           representatives,
           keywords,
+          preferences,
         })
       })
       .catch((err) => { throw err; })
@@ -36,12 +38,14 @@ const SignupForm = React.createClass({
       .then((res) => {
         const token = res.credential.accessToken;
         const user = res.user;
+        const preferences = { frequency: 'weekly' }
         database.ref(`users/${user.uid}`).set({
           name: user.displayName,
           email: user.email,
           token,
           representatives,
           keywords,
+          preferences,
         })
       })
       .catch((err) => { throw err; })
