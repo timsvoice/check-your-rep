@@ -1,11 +1,14 @@
 #161204
-The testing of the user dashboard is basically completed. Todat we should complete the routing system for the dashboard and look at authentication. Once that is complete I think we can move onto the final styling of the app.
+The testing of the user dashboard is basically completed. Today we should complete the routing system for the dashboard and look at authentication. Once that is complete I think we can move onto the final styling of the app.
 
 ##GOAL
 Finalize the user dashboard (including base styling) and complete base styling for the rest of the app.
 
 ##STRETCH GOAL
 Begin work on the emailing mechanism (server)
+
+##RESULT
+The authentication system was more complicated than I anticipated, but I have it up and running. I've started styling but I think that should wait until I have a overall userflow strategy in place (routing for logged in vs unauthenticated users and editing settings).
 
 ----
 

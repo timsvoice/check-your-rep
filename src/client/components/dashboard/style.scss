@@ -1,0 +1,24 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+}
+
+.dashboard {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  flex: 1;
+  &-edit-button {
+    width: 7rem;
+  }
+}
+
+.keyword-list-container, .representative-list-container, .preferences-list-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.keyword-list-container, .representative-list-container {
+  width: 50%;
+}

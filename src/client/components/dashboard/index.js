@@ -9,9 +9,13 @@ import CircularProgress from 'material-ui/CircularProgress'
 import Avatar from 'material-ui/Avatar';
 import { RepresentativeList } from '../representatives/index';
 import Toggle from 'material-ui/Toggle';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import './style.scss';
 
 const Keywords = (props) => (
   <div className='keyword-list-container'>
+    <h2>Keywords</h2>
     { props.keywords.map((keyword) =>
       <Chip
         key={keyword}
@@ -22,6 +26,7 @@ const Keywords = (props) => (
 
 const Representatives = (props) => (
   <div className='representative-list-container'>
+      <h2>Representatives</h2>
       <List className='representative-list'>
         { props.representatives.map((representative) =>
           <ListItem
@@ -54,7 +59,9 @@ const Preferences = (props) => {
   };
   return (
     <div className='preferences-list-container'>
+      <h2>Email Frequency</h2>
         <Toggle
+          label="Daily"
           className='preference-daily'
           onToggle={ () => {
             toggleEmail('daily')
@@ -62,6 +69,7 @@ const Preferences = (props) => {
           defaultToggled={ props.preferences.frequency === 'daily' }
         />
         <Toggle
+          label="Weekly"
           className='preference-weekly'
           onToggle={ () => {
             toggleEmail('weekly')
@@ -69,6 +77,7 @@ const Preferences = (props) => {
           defaultToggled={ props.preferences.frequency === 'weekly' }
         />
         <Toggle
+          label="Monthly"
           className='preference-monthly'
           onToggle={ () => {
             toggleEmail('monthly')
@@ -92,16 +101,19 @@ const Dashboard = React.createClass({
   render() {
     return (
       <div className='dashboard-container'>
+        <h1>Settings</h1>
+          <RaisedButton
+            label="Edit"
+            primary={true}
+            onClick={this.editPreferences}
+            className="dashboard-edit-button"
+          />
         { this.state ?
-          <div>
-          <div className='dashboard-left'>
-            <Keywords keywords={this.state.user.keywords}/>
-            <Representatives representatives={this.state.user.representatives} />
+          <div className="dashboard">
+              <Keywords keywords={this.state.user.keywords}/>
+              <Representatives representatives={this.state.user.representatives} />
+              <Preferences preferences={this.state.user.preferences} />
           </div>
-          <div className='dashboard-right'>
-            <Preferences preferences={this.state.user.preferences} />
-          </div>
-        </div>
         : <CircularProgress /> }
       </div>
     )
