@@ -1,3 +1,14 @@
+#161207
+The app is near completion but serious slow going. Need to ramp up work and complete the app by Sunday.
+
+#GOAL
+Today I'm going to quick scaffold some routing based on authentication. The user should be able to get to their profile and make quick changes from there (routing to keywords, representatives).
+
+#STRETCH GOAL
+Landing page construction.
+
+----
+
 #161204
 The testing of the user dashboard is basically completed. Today we should complete the routing system for the dashboard and look at authentication. Once that is complete I think we can move onto the final styling of the app.
 

@@ -16,7 +16,6 @@ import './style.scss';
 
 const AppContainer = React.createClass({
   componentWillMount() {
-    console.log(this.state);
     firebase.auth().onAuthStateChanged((auth) => {
       this.setState({
         user: auth
