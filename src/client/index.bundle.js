@@ -74,10 +74,6 @@
 
 	var _data = __webpack_require__(322);
 
-	var _auth = __webpack_require__(329);
-
-	var _auth2 = _interopRequireDefault(_auth);
-
 	var _firebase = __webpack_require__(323);
 
 	var firebase = _interopRequireWildcard(_firebase);
@@ -103,7 +99,6 @@
 	(0, _reactTapEventPlugin2['default'])();
 
 	var client = new _apolloClient2['default']();
-	console.log(firebase.auth().currentUser);
 
 	_reactDom2['default'].render(_react2['default'].createElement(
 	  _reactApollo.ApolloProvider,
@@ -53859,10 +53854,6 @@
 
 	var _data = __webpack_require__(322);
 
-	var _auth = __webpack_require__(329);
-
-	var _auth2 = _interopRequireDefault(_auth);
-
 	var _AppBar = __webpack_require__(509);
 
 	var _AppBar2 = _interopRequireDefault(_AppBar);
@@ -53879,10 +53870,10 @@
 	    function componentWillMount() {
 	      var _this = this;
 
-	      console.log(this.state);
-	      firebase.auth().onAuthStateChanged(function (auth) {
+	      firebase.auth().onAuthStateChanged(function (user) {
+	        if (user === null) _reactRouter.browserHistory.push('/');
 	        _this.setState({
-	          user: auth
+	          user: user
 	        });
 	      });
 	    }
@@ -53902,8 +53893,15 @@
 	  }(),
 	  signIn: function () {
 	    function signIn() {
+	      var _this2 = this;
+
 	      var provider = new firebase.auth.GoogleAuthProvider();
-	      firebase.auth().signInWithPopup(provider);
+	      firebase.auth().signInWithPopup(provider).then(function (auth) {
+	        _this2.setState({
+	          user: auth.user
+	        });
+	        _reactRouter.browserHistory.push('/me');
+	      });
 	    }
 
 	    return signIn;
@@ -79206,6 +79204,8 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _reactRouter = __webpack_require__(178);
+
 	var _firebase = __webpack_require__(323);
 
 	var firebase = _interopRequireWildcard(_firebase);
@@ -79378,12 +79378,15 @@
 	  componentWillMount: function () {
 	    function componentWillMount() {
 	      var user = this.props.user;
-	      if (!user || user === null) throw 'Error! No User';
-	      _data.database.ref('/users/' + user.uid).once('value', function (user) {
-	        this.setState({
-	          user: user.val()
-	        });
-	      }.bind(this));
+	      if (!user || user === null) {
+	        _reactRouter.browserHistory.push('/');
+	      } else {
+	        _data.database.ref('/users/' + user.uid).once('value', function (user) {
+	          this.setState({
+	            user: user.val()
+	          });
+	        }.bind(this));
+	      }
 	    }
 
 	    return componentWillMount;

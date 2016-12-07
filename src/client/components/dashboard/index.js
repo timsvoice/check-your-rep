@@ -1,4 +1,5 @@
 import React from 'react';
+import { browserHistory } from 'react-router';
 import * as firebase from 'firebase';
 import _ from 'underscore';
 import { database } from '../../data';
@@ -91,12 +92,15 @@ const Preferences = (props) => {
 const Dashboard = React.createClass({
   componentWillMount() {
     const user = this.props.user;
-    if (!user || user === null) throw 'Error! No User';
-    database.ref(`/users/${user.uid}`).once('value', function(user) {
-      this.setState({
-        user: user.val()
-      });
-    }.bind(this))
+    if (!user || user === null) {
+      browserHistory.push('/');
+    } else {
+      database.ref(`/users/${user.uid}`).once('value', function(user) {
+        this.setState({
+          user: user.val()
+        });
+      }.bind(this))
+    }
   },
   render() {
     return (

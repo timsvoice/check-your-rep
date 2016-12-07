@@ -9,16 +9,16 @@ import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 
 import { database } from '../../data';
-import auth from '../../auth';
 
 import AppBar from 'material-ui/AppBar';
 import './style.scss';
 
 const AppContainer = React.createClass({
   componentWillMount() {
-    firebase.auth().onAuthStateChanged((auth) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      if (user === null) browserHistory.push('/');
       this.setState({
-        user: auth
+        user: user
       })
     })
   },
@@ -31,7 +31,13 @@ const AppContainer = React.createClass({
   },
   signIn() {
     const provider = new firebase.auth.GoogleAuthProvider();
-    firebase.auth().signInWithPopup(provider);
+    firebase.auth().signInWithPopup(provider)
+      .then((auth) => {
+        this.setState({
+          user: auth.user
+        })
+        browserHistory.push('/me');
+      });
   },
   render() {
     return (
