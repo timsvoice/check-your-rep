@@ -14,6 +14,7 @@ import SignupPage from '../../components/signup/index.js';
 
 const StepperContainer = React.createClass({
   componentWillMount() {
+    if(this.props.user) browserHistory.push('/me');
     this.setState({
       finished: false,
       stepIndex: 0,

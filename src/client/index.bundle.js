@@ -78,17 +78,21 @@
 
 	var firebase = _interopRequireWildcard(_firebase);
 
-	var _index = __webpack_require__(330);
+	var _appContainer = __webpack_require__(330);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _appContainer2 = _interopRequireDefault(_appContainer);
 
-	var _index3 = __webpack_require__(533);
+	var _stepperContainer = __webpack_require__(533);
 
-	var _index4 = _interopRequireDefault(_index3);
+	var _stepperContainer2 = _interopRequireDefault(_stepperContainer);
 
-	var _index5 = __webpack_require__(662);
+	var _dashboard = __webpack_require__(662);
 
-	var _index6 = _interopRequireDefault(_index5);
+	var _dashboard2 = _interopRequireDefault(_dashboard);
+
+	var _homepage = __webpack_require__(665);
+
+	var _homepage2 = _interopRequireDefault(_homepage);
 
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
 
@@ -108,9 +112,10 @@
 	    { history: _reactRouter.browserHistory },
 	    _react2['default'].createElement(
 	      _reactRouter.Route,
-	      { path: '/', component: _index2['default'] },
-	      _react2['default'].createElement(_reactRouter.IndexRoute, { component: _index4['default'] }),
-	      _react2['default'].createElement(_reactRouter.Route, { path: 'me', component: _index6['default'] })
+	      { path: '/', component: _appContainer2['default'] },
+	      _react2['default'].createElement(_reactRouter.IndexRoute, { component: _homepage2['default'] }),
+	      _react2['default'].createElement(_reactRouter.Route, { path: 'me', component: _dashboard2['default'] }),
+	      _react2['default'].createElement(_reactRouter.Route, { path: 'start', component: _stepperContainer2['default'] })
 	    )
 	  )
 	), document.getElementById('App'));
@@ -65217,6 +65222,7 @@
 	  displayName: 'StepperContainer',
 	  componentWillMount: function () {
 	    function componentWillMount() {
+	      if (this.props.user) _reactRouter.browserHistory.push('/me');
 	      this.setState({
 	        finished: false,
 	        stepIndex: 0,
@@ -79462,6 +79468,77 @@
 
 	// exports
 
+
+/***/ },
+/* 665 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(178);
+
+	var _firebase = __webpack_require__(323);
+
+	var firebase = _interopRequireWildcard(_firebase);
+
+	var _Paper = __webpack_require__(529);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	var _RaisedButton = __webpack_require__(610);
+
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj['default'] = obj; return newObj; } }
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+	var HomePage = function () {
+	  function HomePage(props) {
+	    var start = function () {
+	      function start(e) {
+	        _reactRouter.browserHistory.push('/start');
+	      }
+
+	      return start;
+	    }();
+	    return _react2['default'].createElement(
+	      'div',
+	      null,
+	      _react2['default'].createElement(
+	        _Paper2['default'],
+	        { zDepth: 1, rounded: false },
+	        _react2['default'].createElement(
+	          'h1',
+	          null,
+	          'Check Your Rep'
+	        ),
+	        _react2['default'].createElement(
+	          'p',
+	          null,
+	          'Welcome to Check Your Rep!'
+	        ),
+	        _react2['default'].createElement(_RaisedButton2['default'], {
+	          label: 'Get Started',
+	          primary: true,
+	          onClick: start
+	        })
+	      )
+	    );
+	  }
+
+	  return HomePage;
+	}();
+
+	exports['default'] = HomePage;
 
 /***/ }
 /******/ ]);

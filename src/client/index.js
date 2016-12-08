@@ -11,9 +11,10 @@ import './styles/style.scss';
 
 import { database } from './data';
 import * as firebase from 'firebase';
-import AppContainer from './containers/app-container/index.js';
-import StepperContainer from './containers/stepper-container/index.js';
-import Dashboard from './components/dashboard/index.js';
+import AppContainer from './containers/app-container';
+import StepperContainer from './containers/stepper-container';
+import Dashboard from './components/dashboard';
+import HomePage from './components/homepage';
 
 // Needed for onTouchTap
 // http://stackoverflow.com/a/34015469/988941
@@ -25,8 +26,9 @@ ReactDOM.render((
   <ApolloProvider client={client}>
     <Router history={browserHistory}>
         <Route path="/" component={AppContainer} >
-          <IndexRoute component={StepperContainer} />
+          <IndexRoute component={HomePage} />
           <Route path="me" component={Dashboard} />
+          <Route path="start" component={StepperContainer} />
         </Route>
     </Router>
   </ApolloProvider>),
